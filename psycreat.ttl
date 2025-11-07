@@ -1,0 +1,1379 @@
+@prefix : <http://www.ontologydesignpatterns.org.org/ont/psycreat.owl#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix dul: <http://www.ontologydesignpatterns.org/ont/dul/DUL.owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@base <http://www.semanticweb.org/ontologies/psych-semantics> .
+
+<http://www.ontologydesignpatterns.org.org/ont/psycreat.owl> rdf:type owl:Ontology ;
+    rdfs:comment "Ontology for the semantic analysis of psychiatric texts and patient metadata based on frame semantics." ;
+    rdfs:label "Ontology of psychiatric patient data and authored documents." ;
+    owl:versionInfo "14" .
+
+#################################################################
+#    Classes
+#################################################################
+
+:Document rdf:type owl:Class ;
+    rdfs:subClassOf dul:InformationEntity ;
+    rdfs:comment "Represents analyzed psychiatric texts" ;
+    rdfs:label "Document" .
+
+:Author rdf:type owl:Class ;
+    rdfs:subClassOf dul:NaturalPerson ;
+    rdfs:comment "Author of psychiatric documents" ;
+    rdfs:label "Author" .
+
+:Frame rdf:type owl:Class ;
+    rdfs:subClassOf dul:Description ;
+    rdfs:comment "Semantic frame identified in the text" ;
+    rdfs:label "Frame" .
+
+:Participant rdf:type owl:Class ;
+    rdfs:subClassOf dul:Entity ;
+    owl:equivalentClass [
+        rdf:type owl:Restriction ;
+        owl:onProperty :participantIn ;
+        owl:someValuesFrom dul:Situation
+    ] ;
+    rdfs:comment "Entity participating in a situation evoking a semantic frame. Defined as anything that participates in at least one Situation." ;
+    rdfs:label "Participant" .
+
+### Disease Classes
+
+:Disease rdf:type owl:Class ;
+    rdfs:subClassOf dul:Event ;
+    rdfs:comment "A disease or pathological condition" ;
+    rdfs:label "Disease"@en .
+
+:DSM5Category rdf:type owl:Class ;
+    rdfs:subClassOf dul:Description ;
+    rdfs:comment "DSM-5 diagnostic category" ;
+    rdfs:label "DSM5Category" .
+
+### Occupation Classes
+
+:Occupation rdf:type owl:Class ;
+    rdfs:subClassOf dul:Role ;
+    rdfs:comment "Occupation or profession" ;
+    rdfs:label "Occupation" .
+
+### Occupation Level Classes
+
+:GenericOccupation rdf:type owl:Class ;
+    rdfs:subClassOf :Occupation ;
+    rdfs:label "Occupation Type"@en ;
+    rdfs:comment "Broad occupational category (e.g., Military&Police, Teaching&Education)" .
+
+
+:SpecificOccupation rdf:type owl:Class ;
+    rdfs:subClassOf :Occupation ; 
+    rdfs:label "Specific Occupation"@en ;
+    rdfs:comment "A detailed, specific profession (e.g., 'Army Officer' from the 'Occupation' column)." .
+
+### Disjointness of main classes
+
+[] rdf:type owl:AllDisjointClasses ;
+    owl:members ( :Document dul:Situation :Author ) .
+
+:Participant owl:disjointWith :Document, dul:Situation .
+
+[] rdf:type owl:AllDisjointClasses ;
+   owl:members ( :Disease :Occupation :Document ) .
+
+[] rdf:type owl:AllDisjointClasses ;
+   owl:members ( :DSM5Category :Occupation :Document ) .
+ 
+# [] rdf:type owl:AllDisjointClasses ;
+#    owl:members ( :GenericOccupation :SpecificOccupation ) .
+
+# :Occupation owl:disjointWith dul:Situation .
+
+### Frame Subclasses with Punning (OWL2)
+
+
+:Abandonment rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Abandonment" .
+
+:Academic_Scientific_Jargon rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Academic_Scientific_Jargon" .
+
+:Accusation rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Accusation" .
+
+:Ambition_Employment_Request rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Ambition_Employment_Request" .
+
+:Ambition_Planning rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Ambition_Planning" .
+
+:Anger_Profanity rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Anger_Profanity" .
+
+:Anti_clericalism rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Anti_clericalism" .
+
+:Anti_fascism rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Anti_fascism" .
+
+:Anti_monarchy rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Anti_monarchy" .
+
+:Anti_religious_Sentiment rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Anti_religious_Sentiment" .
+
+:Apology rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Apology" .
+
+:Appeal_to_Authority rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Appeal_to_Authority" .
+
+:Appeal_to_Authority_military rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Appeal_to_Authority_military" .
+
+:Asceticism_Religious_Vow rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Asceticism_Religious_Vow" .
+
+:Autobiographical_Account rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Autobiographical_Account" .
+
+:Betrayal rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Betrayal" .
+
+:Bizarre_Delusions rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Bizarre_Delusions" .
+
+:Bizarre_Obsessive_Instructions rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Bizarre_Obsessive_Instructions" .
+
+:Bizarre_Scatological_Humor rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Bizarre_Scatological_Humor" .
+
+:Bizarre_Scientific_Theories rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Bizarre_Scientific_Theories" .
+
+:Brain_centered_Delusion rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Brain_centered_Delusion" .
+
+:Bureaucratic_Concerns rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Bureaucratic_Concerns" .
+
+:Bureaucratic_Request rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Bureaucratic_Request" .
+
+:Calculated_Aggression rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Calculated_Aggression" .
+
+:Civic_Address rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Civic_Address" .
+
+:Coded_Language rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Coded_Language" .
+
+:Complaint rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Complaint" .
+
+:Complaint_Accusation rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Complaint_Accusation" .
+
+:Complaint_Financial_Dispute rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Complaint_Financial_Dispute" .
+
+:Confession rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Confession" .
+
+:Confession_Request_for_Confinement rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Confession_Request_for_Confinement" .
+
+:Conflict_with_Authority rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Conflict_with_Authority" .
+
+:Conspiracy rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Conspiracy" .
+
+:Conspiracy_political rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Conspiracy_political" .
+
+:Cosmological_Creation_Myth rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Cosmological_Creation_Myth" .
+
+:Creative_Writing rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Creative_Writing" .
+
+:Cryptic_Message_SOS rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Cryptic_Message_SOS" .
+
+:Cryptic_Statements rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Cryptic_Statements" .
+
+:Cryptic_Symbolic_Poetry rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Cryptic_Symbolic_Poetry" .
+
+:Death_Funerary_Themes rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Death_Funerary_Themes" .
+
+:Delusional_Autobiography rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Delusional_Autobiography" .
+
+:Delusional_Memory rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Delusional_Memory" .
+
+:Delusional_Planning rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Delusional_Planning" .
+
+:Derealization rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Derealization" .
+
+:Despair rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Despair" .
+
+:Enigmatography rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Enigmatography" .
+
+:Erotomanic_Delusion rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Erotomanic_Delusion" .
+
+:Erotomanic_Romantic_Ideation rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Erotomanic_Romantic_Ideation" .
+
+:Espionage rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Espionage" .
+
+:Fable_Storytelling rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Fable_Storytelling" .
+
+:Family_Appeal rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Family_Appeal" .
+
+:Family_Concerns rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Family_Concerns" .
+
+:Family_Conflict rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Family_Conflict" .
+
+:Family_Correspondence rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Family_Correspondence" .
+
+:Family_Separation rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Family_Separation" .
+
+:Family_Tragedy rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Family_Tragedy" .
+
+:Family_Tragedy_murder rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Family_Tragedy_murder" .
+
+:Fantastical_Mythological_Journey rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Fantastical_Mythological_Journey" .
+
+:Fear_Anxiety rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Fear_Anxiety" .
+
+:Fear_for_Family rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Fear_for_Family" .
+
+:Financial_Bureaucratic_Request rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Financial_Bureaucratic_Request" .
+
+:Financial_Concerns rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Financial_Concerns" .
+
+:Financial_Demands rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Financial_Demands" .
+
+:Financial_Dispute rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Financial_Dispute" .
+
+:Financial_Legal_Demand rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Financial_Legal_Demand" .
+
+:Financial_Request rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Financial_Request" .
+
+:Fixation_on_a_Person rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Fixation_on_a_Person" .
+
+:Framing rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Framing" .
+
+:Grandiose_Confused_Identity rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Grandiose_Confused_Identity" .
+
+:Grandiose_Delusion rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Grandiose_Delusion" .
+
+:Grandiose_Delusions rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Grandiose_Delusions" .
+
+:Grandiose_Delusions_Royalty rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Grandiose_Delusions_Royalty" .
+
+:Grandiose_Delusions_Royalty_Wealth rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Grandiose_Delusions_Royalty_Wealth" .
+
+:Grandiose_Religious_Delusion rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Grandiose_Religious_Delusion" .
+
+:Gratitude rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Gratitude" .
+
+:Hallucination rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Hallucination" .
+
+:Hallucinations rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Hallucinations" .
+
+:Hallucinations_Delusional_Memories rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Hallucinations_Delusional_Memories" .
+
+:Hallucinations_auditory rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Hallucinations_auditory" .
+
+:Hierarchy_Order rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Hierarchy_Order" .
+
+:Historical_Setting rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Historical_Setting" .
+
+:Hope_for_Recovery rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Hope_for_Recovery" .
+
+:Hope_for_Release rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Hope_for_Release" .
+
+:Hospital_Setting rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Hospital_Setting" .
+
+:Impending_Death rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Impending_Death" .
+
+:Imprisonment_Confinement rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Imprisonment_Confinement" .
+
+:Incoherent_Glossolalia rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Incoherent_Glossolalia" .
+
+:Incoherent_Numerical rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Incoherent_Numerical" .
+
+:Incoherent_Repetitive_Language rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Incoherent_Repetitive_Language" .
+
+:Incoherent_Statement rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Incoherent_Statement" .
+
+:Incoherent_Word_Salad rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Incoherent_Word_Salad" .
+
+:Insult_Aggression rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Insult_Aggression" .
+
+:Insults rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Insults" .
+
+:Inter_patient_Conflict rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Inter_patient_Conflict" .
+
+:Invention rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Invention" .
+
+:Kidnapping rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Kidnapping" .
+
+:Legal_Bureaucratic_Document rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Legal_Bureaucratic_Document" .
+
+:Legal_Punitive_Fantasy rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Legal_Punitive_Fantasy" .
+
+:Legal_Testamentary rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Legal_Testamentary" .
+
+:Letter_to_Wife rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Letter_to_Wife" .
+
+:Logical_Philosophical_Reasoning rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Logical_Philosophical_Reasoning" .
+
+:Logical_Reasoning_from_Delusion rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Logical_Reasoning_from_Delusion" .
+
+:Longing_for_Normalcy rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Longing_for_Normalcy" .
+
+:Love_Betrayal rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Love_Betrayal" .
+
+:Love_Romance rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Love_Romance" .
+
+:Marital_Conflict rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Marital_Conflict" .
+
+:Marital_Conflict_Infidelity rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Marital_Conflict_Infidelity" .
+
+:Marital_Conflict_Jealousy rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Marital_Conflict_Jealousy" .
+
+:Medical_Concerns rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Medical_Concerns" .
+
+:Medical_Hospital_Setting rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Medical_Hospital_Setting" .
+
+:Medical_Psychiatric_History rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Medical_Psychiatric_History" .
+
+:Medical_Psychological_History rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Medical_Psychological_History" .
+
+:Medical_Treatment rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Medical_Treatment" .
+
+:Mild_Incoherence rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Mild_Incoherence" .
+
+:Military_Patriotism rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Military_Patriotism" .
+
+:Mission rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Mission" .
+
+:Mistreatment rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Mistreatment" .
+
+:Mistrust_of_Doctors rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Mistrust_of_Doctors" .
+
+:Mystical_Astrological_Prediction rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Mystical_Astrological_Prediction" .
+
+:Mystical_Cosmological_Themes rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Mystical_Cosmological_Themes" .
+
+:Mystical_Occult_Beliefs rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Mystical_Occult_Beliefs" .
+
+:Mystical_Religious_Delusions rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Mystical_Religious_Delusions" .
+
+:Mystical_Visionary_Experience rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Mystical_Visionary_Experience" .
+
+:Narrative_Storytelling rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Narrative_Storytelling" .
+
+:Neglect_Abandonment rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Neglect_Abandonment" .
+
+:Neologisms rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Neologisms" .
+
+:Numerology rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Numerology" .
+
+:Official_Report rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Official_Report" .
+
+:Patriotism rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Patriotism" .
+
+:Persecution rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Persecution" .
+
+:Persecution_Torture rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Persecution_Torture" .
+
+:Persecution_bizarre rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Persecution_bizarre" .
+
+:Persecutory_Ideation rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Persecutory_Ideation" .
+
+:Personal_Honor rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Personal_Honor" .
+
+:Philosophical_Influence rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Philosophical_Influence" .
+
+:Philosophical_Reflection rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Philosophical_Reflection" .
+
+:Plea_for_Release rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Plea_for_Release" .
+
+:Plea_for_Release_Employment rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Plea_for_Release_Employment" .
+
+:Poetic_Expression rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Poetic_Expression" .
+
+:Poetic_Expression_Songwriting rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Poetic_Expression_Songwriting" .
+
+:Poetic_Reflection rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Poetic_Reflection" .
+
+:Poisoning rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Poisoning" .
+
+:Poisoning_Contamination rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Poisoning_Contamination" .
+
+:Political_Commentary rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Political_Commentary" .
+
+:Political_Identity rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Political_Identity" .
+
+:Political_Military_Themes rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Political_Military_Themes" .
+
+:Political_Praise rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Political_Praise" .
+
+:Political_Praise_Fascism rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Political_Praise_Fascism" .
+
+:Political_Praise_Monarchy rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Political_Praise_Monarchy" .
+
+:Political_Rebellion_Threat rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Political_Rebellion_Threat" .
+
+:Political_Satire rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Political_Satire" .
+
+:Political_Statement rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Political_Statement" .
+
+:Political_Themes rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Political_Themes" .
+
+:Prayer_Religious_Expression rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Prayer_Religious_Expression" .
+
+:Prophecy_Revelation rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Prophecy_Revelation" .
+
+:Protest rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Protest" .
+
+:Proverbial_Wisdom rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Proverbial_Wisdom" .
+
+:Religious_Blasphemy rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Religious_Blasphemy" .
+
+:Religious_Crisis rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Religious_Crisis" .
+
+:Religious_Delusions rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Religious_Delusions" .
+
+:Religious_Delusions_Erotomanic rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Religious_Delusions_Erotomanic" .
+
+:Religious_Mania rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Religious_Mania" .
+
+:Religious_Mystical_Delusion rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Religious_Mystical_Delusion" .
+
+:Religious_Mystical_Delusions rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Religious_Mystical_Delusions" .
+
+:Religious_Philosophical_Reflection rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Religious_Philosophical_Reflection" .
+
+:Religious_Themes rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Religious_Themes" .
+
+:Report_Complaint rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Report_Complaint" .
+
+:Revenge rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Revenge" .
+
+:Revenge_Vindication rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Revenge_Vindication" .
+
+:Romance_Nostalgia rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Romance_Nostalgia" .
+
+:Self_awareness_Insight rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Self_awareness_Insight" .
+
+:Self_awareness_Justification rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Self_awareness_Justification" .
+
+:Self_defense rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Self_defense" .
+
+:Self_defense_Justification rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Self_defense_Justification" .
+
+:Self_justification rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Self_justification" .
+
+:Self_justification_Explanation rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Self_justification_Explanation" .
+
+:Sexual_Assault_Rape rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Sexual_Assault_Rape" .
+
+:Sexual_Delusions rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Sexual_Delusions" .
+
+:Sexual_Delusions_Assault rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Sexual_Delusions_Assault" .
+
+:Sexual_Gender_Identity_Delusions rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Sexual_Gender_Identity_Delusions" .
+
+:Sexual_Genital_Delusions rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Sexual_Genital_Delusions" .
+
+:Sexual_Identity_Concerns rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Sexual_Identity_Concerns" .
+
+:Simple_Correspondence rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Simple_Correspondence" .
+
+:Simple_Request rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Simple_Request" .
+
+:Social_Commentary rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Social_Commentary" .
+
+:Social_Conflict rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Social_Conflict" .
+
+:Social_Correspondence rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Social_Correspondence" .
+
+:Social_Critique rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Social_Critique" .
+
+:Social_Disgrace rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Social_Disgrace" .
+
+:Social_Injustice rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Social_Injustice" .
+
+:Somatic_Complaint rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Somatic_Complaint" .
+
+:Somatic_Complaints rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Somatic_Complaints" .
+
+:Somatic_Delusions rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Somatic_Delusions" .
+
+:Suffering rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Suffering" .
+
+:Suicide_Attempt rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Suicide_Attempt" .
+
+:Surveillance rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Surveillance" .
+
+:Symbolic_Action rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Symbolic_Action" .
+
+:Technical_Jargon_Neologisms rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Technical_Jargon_Neologisms" .
+
+:Technology_as_Explanation_for_Delusions rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Technology_as_Explanation_for_Delusions" .
+
+:Technology_as_Persecution rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Technology_as_Persecution" .
+
+:Theft rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Theft" .
+
+:Thought_Energy_Influence rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Thought_Energy_Influence" .
+
+:Thought_Influence rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Thought_Influence" .
+
+:Thought_Influence_Control rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Thought_Influence_Control" .
+
+:Thought_Influence_Interception rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Thought_Influence_Interception" .
+
+:Thought_Influence_Transmission rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Thought_Influence_Transmission" .
+
+:Threatening_Language rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Threatening_Language" .
+
+:Threats rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Threats" .
+
+:Torture rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Torture" .
+
+:Vindication_Justice rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Vindication_Justice" .
+
+:Violence rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Violence" .
+
+:War rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "War" .
+
+:War_Experience rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "War_Experience" .
+
+:War_Experience_WWI rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "War_Experience_WWI" .
+
+:War_Themes_WWII rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "War_Themes_WWII" .
+
+:Wordplay_Linguistic_Curiosity rdf:type :Frame , owl:Class ;
+    rdfs:subClassOf dul:Situation ;
+    rdfs:label "Wordplay_Linguistic_Curiosity" .
+#  [] rdf:type owl:AllDisjointClasses ;
+#     owl:members ( :Persecution :Conspiracy :Mission :Vindication :Poisoning ) .
+
+
+#################################################################
+#    Object Properties - Participant Roles
+#################################################################
+
+### General participant property
+
+:hasParticipant rdf:type owl:ObjectProperty ;
+    rdfs:domain dul:Situation ;
+    rdfs:range :Participant ;
+    rdfs:comment "General property connecting a situation to its participants" ;
+    rdfs:label "hasParticipant" .
+
+:participantIn rdf:type owl:ObjectProperty ;
+    owl:inverseOf :hasParticipant ;
+    rdfs:range dul:Situation ;
+    rdfs:label "participantIn" .
+
+### Specific semantic role properties (subproperties of hasParticipant)
+
+:hasAccuser rdf:type owl:ObjectProperty ;
+    rdfs:subPropertyOf :hasParticipant ;
+    rdfs:comment "Participant who accuses in delusional contexts" ;
+    rdfs:label "hasAccuser" .
+
+:accuserOf rdf:type owl:ObjectProperty ;
+    owl:inverseOf :hasAccuser ;
+    rdfs:subPropertyOf :participantIn ;
+    rdfs:label "accuserOf" .
+
+:hasPatient rdf:type owl:ObjectProperty ;
+    rdfs:subPropertyOf :hasParticipant ;
+    rdfs:comment "Participant who undergoes or receives the action" ;
+    rdfs:label "hasPatient" .
+
+:patientOf rdf:type owl:ObjectProperty ;
+    owl:inverseOf :hasPatient ;
+    rdfs:subPropertyOf :participantIn ;
+    rdfs:label "patientOf" .
+
+:hasAgent rdf:type owl:ObjectProperty ;
+    rdfs:subPropertyOf :hasParticipant ;
+    rdfs:comment "Participant who actively performs the action described by the situation" ;
+    rdfs:label "hasAgent" .
+
+:agentOf rdf:type owl:ObjectProperty ;
+    owl:inverseOf :hasAgent ;
+    rdfs:subPropertyOf :participantIn ;
+    rdfs:label "agentOf" .
+
+:hasProtagonist rdf:type owl:ObjectProperty ;
+    rdfs:subPropertyOf :hasParticipant ;
+    rdfs:comment "Main character or protagonist in the delusional narrative" ;
+    rdfs:label "hasProtagonist" .
+
+:protagonistOf rdf:type owl:ObjectProperty ;
+    owl:inverseOf :hasProtagonist ;
+    rdfs:subPropertyOf :participantIn ;
+    rdfs:label "protagonistOf" .
+
+:hasExperiencer rdf:type owl:ObjectProperty ;
+    rdfs:subPropertyOf :hasParticipant ;
+    rdfs:comment "Participant who experiences a psychological or perceptual state" ;
+    rdfs:label "hasExperiencer" .
+
+:experiencerOf rdf:type owl:ObjectProperty ;
+    owl:inverseOf :hasExperiencer ;
+    rdfs:subPropertyOf :participantIn ;
+    rdfs:label "experiencerOf" .
+
+:hasTheme rdf:type owl:ObjectProperty ;
+    rdfs:subPropertyOf :hasParticipant ;
+    rdfs:comment "The theme or central topic of the frame" ;
+    rdfs:label "hasTheme" .
+
+:themeOf rdf:type owl:ObjectProperty ;
+    owl:inverseOf :hasTheme ;
+    rdfs:subPropertyOf :participantIn ;
+    rdfs:label "themeOf" .
+
+:hasAddressee rdf:type owl:ObjectProperty ;
+    rdfs:subPropertyOf :hasParticipant ;
+    rdfs:comment "The addressee of a communication" ;
+    rdfs:label "hasAddressee" .
+
+:addresseeOf rdf:type owl:ObjectProperty ;
+    owl:inverseOf :hasAddressee ;
+    rdfs:subPropertyOf :participantIn ;
+    rdfs:label "addresseeOf" .
+
+:hasSource rdf:type owl:ObjectProperty ;
+    rdfs:subPropertyOf :hasParticipant ;
+    rdfs:comment "The source or origin of something" ;
+    rdfs:label "hasSource" .
+
+:sourceOf rdf:type owl:ObjectProperty ;
+    owl:inverseOf :hasSource ;
+    rdfs:subPropertyOf :participantIn ;
+    rdfs:label "sourceOf" .
+
+:hasBeneficiary rdf:type owl:ObjectProperty ;
+    rdfs:subPropertyOf :hasParticipant ;
+    rdfs:comment "Who benefits from the action" ;
+    rdfs:label "hasBeneficiary" .
+
+:beneficiaryOf rdf:type owl:ObjectProperty ;
+    owl:inverseOf :hasBeneficiary ;
+    rdfs:subPropertyOf :participantIn ;
+    rdfs:label "beneficiaryOf" .
+
+:hasTarget rdf:type owl:ObjectProperty ;
+    rdfs:subPropertyOf :hasParticipant ;
+    rdfs:comment "The target of an action" ;
+    rdfs:label "hasTarget" .
+
+:targetOf rdf:type owl:ObjectProperty ;
+    owl:inverseOf :hasTarget ;
+    rdfs:subPropertyOf :participantIn ;
+    rdfs:label "targetOf" .
+
+:hasWriter rdf:type owl:ObjectProperty ;
+    rdfs:subPropertyOf :hasParticipant ;
+    rdfs:comment "Who writes the document or text" ;
+    rdfs:label "hasWriter" .
+
+:writerOf rdf:type owl:ObjectProperty ;
+    owl:inverseOf :hasWriter ;
+    rdfs:subPropertyOf :participantIn ;
+    rdfs:label "writerOf" .
+
+:hasCharacter rdf:type owl:ObjectProperty ;
+    rdfs:subPropertyOf :hasParticipant ;
+    rdfs:comment "Characters in a narrative" ;
+    rdfs:label "hasCharacter" .
+
+:characterOf rdf:type owl:ObjectProperty ;
+    owl:inverseOf :hasCharacter ;
+    rdfs:subPropertyOf :participantIn ;
+    rdfs:label "characterOf" .
+
+:hasAntagonist rdf:type owl:ObjectProperty ;
+    rdfs:subPropertyOf :hasParticipant ;
+    rdfs:comment "The antagonist or opponent" ;
+    rdfs:label "hasAntagonist" .
+
+:antagonistOf rdf:type owl:ObjectProperty ;
+    owl:inverseOf :hasAntagonist ;
+    rdfs:subPropertyOf :participantIn ;
+    rdfs:label "antagonistOf" .
+
+:hasAccused rdf:type owl:ObjectProperty ;
+    rdfs:subPropertyOf :hasParticipant ;
+    rdfs:comment "Who is accused" ;
+    rdfs:label "hasAccused" .
+
+:accusedOf rdf:type owl:ObjectProperty ;
+    owl:inverseOf :hasAccused ;
+    rdfs:subPropertyOf :participantIn ;
+    rdfs:label "accusedOf" .
+
+:hasInstrument rdf:type owl:ObjectProperty ;
+    rdfs:subPropertyOf :hasParticipant ;
+    rdfs:comment "Instrument used for the action" ;
+    rdfs:label "hasInstrument" .
+
+:instrumentOf rdf:type owl:ObjectProperty ;
+    owl:inverseOf :hasInstrument ;
+    rdfs:subPropertyOf :participantIn ;
+    rdfs:label "instrumentOf" .
+
+:hasVictim rdf:type owl:ObjectProperty ;
+    rdfs:subPropertyOf :hasParticipant ;
+    rdfs:comment "Victim of an action" ;
+    rdfs:label "hasVictim" .
+
+:victimOf rdf:type owl:ObjectProperty ;
+    owl:inverseOf :hasVictim ;
+    rdfs:subPropertyOf :participantIn ;
+    rdfs:label "victimOf" .
+
+:hasRequester rdf:type owl:ObjectProperty ;
+    rdfs:subPropertyOf :hasParticipant ;
+    rdfs:comment "Who makes a request" ;
+    rdfs:label "hasRequester" .
+
+:requesterOf rdf:type owl:ObjectProperty ;
+    owl:inverseOf :hasRequester ;
+    rdfs:subPropertyOf :participantIn ;
+    rdfs:label "requesterOf" .
+
+:hasGoal rdf:type owl:ObjectProperty ;
+    rdfs:subPropertyOf :hasParticipant ;
+    rdfs:comment "The goal to be achieved" ;
+    rdfs:label "hasGoal" .
+
+:goalOf rdf:type owl:ObjectProperty ;
+    owl:inverseOf :hasGoal ;
+    rdfs:subPropertyOf :participantIn ;
+    rdfs:label "goalOf" .
+
+:hasSubject rdf:type owl:ObjectProperty ;
+    rdfs:subPropertyOf :hasParticipant ;
+    rdfs:comment "The subject being talked about" ;
+    rdfs:label "hasSubject" .
+
+:subjectOf rdf:type owl:ObjectProperty ;
+    owl:inverseOf :hasSubject ;
+    rdfs:subPropertyOf :participantIn ;
+    rdfs:label "subjectOf" .
+
+:hasLocation rdf:type owl:ObjectProperty ;
+    rdfs:subPropertyOf :hasParticipant ;
+    rdfs:comment "Location where the action takes place" ;
+    rdfs:label "hasLocation" .
+
+:locationOf rdf:type owl:ObjectProperty ;
+    owl:inverseOf :hasLocation ;
+    rdfs:subPropertyOf :participantIn ;
+    rdfs:label "locationOf" .
+
+:hasParticipants rdf:type owl:ObjectProperty ;
+    rdfs:subPropertyOf :hasParticipant ;
+    rdfs:comment "Generic participants (plural)" ;
+    rdfs:label "hasParticipants" .
+
+:participantsOf rdf:type owl:ObjectProperty ;
+    owl:inverseOf :hasParticipants ;
+    rdfs:subPropertyOf :participantIn ;
+    rdfs:label "participantsOf" .
+
+#################################################################
+#    Object Properties - Diagnosis and Occupation
+#################################################################
+
+### Disease Properties
+
+:hasDiseaseCondition rdf:type owl:ObjectProperty ;
+    rdfs:domain :Author ;
+    rdfs:range :Disease ;
+    rdfs:label "hasDiseaseCondition"@en ;
+    rdfs:comment "Links an author to a disease condition"@en ;
+    owl:inverseOf :diseaseConditionOf .
+
+:diseaseConditionOf rdf:type owl:ObjectProperty ;
+    rdfs:domain :Disease ;
+    rdfs:range :Author ;
+    rdfs:label "diseaseConditionOf"@en ;
+    rdfs:comment "Inverse: disease affects author"@en .
+
+:hasMainDiseaseCondition rdf:type owl:ObjectProperty ;
+    rdfs:subPropertyOf :hasDiseaseCondition ;
+    rdfs:domain :Author ;
+    rdfs:range :Disease ;
+    rdfs:label "hasMainDiseaseCondition"@en ;
+    rdfs:comment "Primary disease diagnosis"@en .
+
+:hasAdditionalDiseaseCondition rdf:type owl:ObjectProperty ;
+    rdfs:subPropertyOf :hasDiseaseCondition ;
+    rdfs:domain :Author ;
+    rdfs:range :Disease ;
+    rdfs:label "hasAdditionalDiseaseCondition"@en ;
+    rdfs:comment "Secondary or comorbid disease diagnosis"@en .
+
+:mainDiseaseConditionOf rdf:type owl:ObjectProperty ;
+    rdfs:domain :Disease ;
+    rdfs:range :Author ;
+    rdfs:subPropertyOf :diseaseConditionOf ; 
+    rdfs:label "mainDiseaseConditionOf"@en ;
+    rdfs:comment "Inverse of hasMainDiseaseCondition: the disease is the primary diagnosis of the author."@en ;
+    owl:inverseOf :hasMainDiseaseCondition .
+
+:additionalDiseaseConditionOf rdf:type owl:ObjectProperty ;
+    rdfs:domain :Disease ;
+    rdfs:range :Author ;
+    rdfs:subPropertyOf :diseaseConditionOf ; 
+    rdfs:label "additionalDiseaseConditionOf"@en ;
+    rdfs:comment "Inverse of hasAdditionalDiseaseCondition: the disease is a secondary diagnosis of the author."@en ;
+    owl:inverseOf :hasAdditionalDiseaseCondition .
+
+### DSM-5 Category Properties
+
+:hasDSM5Category rdf:type owl:ObjectProperty ;
+    rdfs:domain :Disease ;
+    rdfs:range :DSM5Category ;
+    rdfs:label "hasDSM5Category"@en ;
+    rdfs:comment "Maps a disease to its DSM-5 diagnostic category"@en ;
+    owl:inverseOf :isDSM5CategoryOf .
+
+:isDSM5CategoryOf rdf:type owl:ObjectProperty ;
+    rdfs:domain :DSM5Category ;
+    rdfs:range :Disease ;
+    rdfs:label "isDSM5CategoryOf"@en ;
+    rdfs:comment "Inverse: this DSM-5 category includes the disease"@en .
+
+### Occupation Properties
+
+:hasOccupation rdf:type owl:ObjectProperty ;
+    rdfs:domain :Author ;
+    rdfs:range :SpecificOccupation ;
+    rdfs:label "hasOccupation"@en ;
+    rdfs:comment "The occupation of the author"@en ;
+    owl:inverseOf :isOccupationOf .
+
+:isOccupationOf rdf:type owl:ObjectProperty ;
+    rdfs:domain :SpecificOccupation ;
+    rdfs:range :Author ;
+    rdfs:label "isOccupationOf"@en ;
+    rdfs:comment "Inverse: this occupation belongs to the author"@en .
+
+:belongsToGenericOccupation rdf:type owl:ObjectProperty ;
+    rdfs:domain :SpecificOccupation ; 
+    rdfs:range :GenericOccupation ;      
+    rdfs:comment "Links a specific occupation (instance of :SpecificOccupation) to its generic category (instance of :GenericOccupation)." ;  
+    rdfs:label "belongsToGenericOccupation" .
+
+
+#################################################################
+#    Object Properties - Relations between main classes
+#################################################################
+
+:denotedBy rdf:type owl:ObjectProperty ;
+    rdfs:domain dul:Situation ;
+    rdfs:range :Document ;
+    rdfs:comment "Situation appears in document" ;
+    rdfs:label "denoted by" .
+
+:denotes rdf:type owl:ObjectProperty ;
+    owl:inverseOf :denotedBy ;
+    rdfs:domain :Document ;
+    rdfs:range dul:Situation ;
+    rdfs:label "denotes" .
+
+:hasAuthor rdf:type owl:ObjectProperty ;
+    rdfs:domain :Document ;
+    rdfs:range :Author ;
+    rdfs:label "has author" .
+
+:isAuthorOf rdf:type owl:ObjectProperty ;
+    owl:inverseOf :hasAuthor ;
+    rdfs:domain :Author ;
+    rdfs:range :Document ;
+    rdfs:label "is author o" .
+
+:coOccursWith rdf:type owl:ObjectProperty , owl:SymmetricProperty ;
+    owl:propertyChainAxiom ( 
+        :denotedBy 
+        [ owl:inverseOf :denotedBy ] 
+    ) ;
+    rdfs:domain dul:Situation ;
+    rdfs:range dul:Situation ;
+    rdfs:comment "Indicates that two situations appear together in the same document. Automatically inferred when two situations appear in the same document." ;
+    rdfs:label "coOccurs With" .
+
+#################################################################
+#    Data Properties
+#################################################################
+
+### Author properties
+
+:birthDate rdf:type owl:DatatypeProperty ;
+    rdfs:domain :Author ;
+    rdfs:range xsd:gYear ;
+    rdfs:comment "Birth year of the author" ;
+    rdfs:label "birthDate" .
+
+:deathDate rdf:type owl:DatatypeProperty ;
+    rdfs:domain :Author ;
+    rdfs:range xsd:gYear ;
+    rdfs:comment "Year of death in hospital" ;
+    rdfs:label "deathDate" .
+
+:admissionDate rdf:type owl:DatatypeProperty ;
+    rdfs:domain :Author ;
+    rdfs:range xsd:gYear ;
+    rdfs:comment "Year of admission to the psychiatric hospital" ;
+    rdfs:label "admissionDate" .
+
+:dischargeDate rdf:type owl:DatatypeProperty ;
+    rdfs:domain :Author ;
+    rdfs:range xsd:gYear ;
+    rdfs:comment "Year of discharge from the psychiatric hospital" ;
+    rdfs:label "dischargeDate" .
+
+### Document properties
+
+:writingDate rdf:type owl:DatatypeProperty ;
+    rdfs:domain :Document ;
+    rdfs:range xsd:gYear ;
+    rdfs:comment "Year when the document was written" ;
+    rdfs:label "writingDate" .
+### Note Properties
+
+:birthNote rdf:type owl:DatatypeProperty ;
+    rdfs:domain :Author ;
+    rdfs:range xsd:string ;
+    rdfs:comment "Additional notes about birth date (e.g., uncertainty, alternative dates)" ;
+    rdfs:label "birthNote"@en .
+
+:deathNote rdf:type owl:DatatypeProperty ;
+    rdfs:domain :Author ;
+    rdfs:range xsd:string ;
+    rdfs:comment "Additional notes about death date" ;
+    rdfs:label "deathNote"@en .
+
+:dischargeNote rdf:type owl:DatatypeProperty ;
+    rdfs:domain :Author ;
+    rdfs:range xsd:string ;
+    rdfs:comment "Additional notes about discharge (e.g., 'same year', 'transferred', 'escaped')" ;
+    rdfs:label "dischargeNote"@en .
+
+:writingNote rdf:type owl:DatatypeProperty ;
+    rdfs:domain :Document ;
+    rdfs:range xsd:string ;
+    rdfs:comment "Additional notes about when the document was written" ;
+    rdfs:label "writingNote"@en .
+
+
+
