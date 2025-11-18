@@ -1,136 +1,452 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PsyCreat Study Presentation</title>
-    <!-- Load Tailwind CSS for styling -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>PsyCreat Study Presentation - Clustering Analysis (Optimized)</title>
     <style>
-        /* Use Inter font */
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Inter', sans-serif;
-            overflow: hidden; /* Hide scrollbars */
+            background: #f3f4f6;
+            overflow: hidden;
         }
-        /* Each slide takes up the full screen */
-        .slide {
+
+        #slideshow {
             width: 100vw;
             height: 100vh;
-            display: flex; /* Use flex for centering */
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 4rem; /* Add padding */
-            padding-bottom: 8rem; /* Extra padding to avoid nav */
-            text-align: center;
+            position: relative;
+        }
+
+        .slide {
+            width: 100%;
+            height: 100%;
             position: absolute;
             top: 0;
             left: 0;
-            transition: opacity 0.3s ease-in-out;
-        }
-        /* Hide slides by default, but use opacity for transition (JS will toggle this) */
-        .slide.hidden {
+            background: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 4rem;
+            padding-bottom: 8rem;
+            text-align: center;
             opacity: 0;
-            pointer-events: none;
+            visibility: hidden;
+            transition: opacity 0.5s ease;
         }
-        .slide:not(.hidden) {
+
+        .slide.active {
             opacity: 1;
+            visibility: visible;
         }
-        /* Styling for code blocks */
+
+        h1 {
+            font-size: 3rem;
+            color: #1d4ed8;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        h2 {
+            font-size: 2rem;
+            color: #1d4ed8;
+            margin-bottom: 2rem;
+            font-weight: 700;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        p {
+            font-size: 1.25rem;
+            color: #374151;
+            max-width: 900px;
+            line-height: 1.6;
+        }
+
+        .subtitle {
+            font-size: 1.75rem;
+            color: #6b7280;
+            font-weight: 300;
+            margin-bottom: 2.5rem;
+        }
+
+        /* MODIFICA: Ridotto padding e margin per compattare i box */
+        .content-box {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            padding: 1rem; /* Ridotto da 1.5rem */
+            margin: 0.5rem; /* Ridotto da 1rem */
+            text-align: left;
+            flex: 1;
+        }
+
+        /* MODIFICA: Ridotto il gap per compattare i box */
+        .flex-container {
+            display: flex;
+            gap: 1rem; /* Ridotto da 2rem */
+            max-width: 1200px;
+            width: 100%;
+            margin-top: 0.75rem; /* Ridotto leggermente */
+        }
+
+        .list-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 0.75rem;
+            font-size: 1.125rem;
+        }
+
+        .list-number {
+            color: #2563eb;
+            font-weight: 700;
+            margin-right: 0.75rem;
+            margin-top: 0.25rem;
+        }
+
         pre {
-            background-color: #f4f4f5; /* zinc-100 */
-            border: 1px solid #d4d4d8; /* zinc-300 */
-            border-radius: 0.5rem; /* rounded-lg */
+            background-color: #f4f4f5;
+            border: 1px solid #d4d4d8;
+            border-radius: 0.5rem;
             padding: 1rem;
             text-align: left;
             font-family: monospace;
-            font-size: 0.875rem; /* text-sm */
+            font-size: 0.875rem;
             max-width: 90%;
             overflow-x: auto;
-            color: #3f3f46; /* zinc-700 */
+            color: #3f3f46;
+            margin: 1rem 0;
         }
-        /* Styling for tables */
+
         table {
             border-collapse: collapse;
             margin-top: 1.5rem;
-            width: auto;
-            border-radius: 0.5rem;
-            overflow: hidden; /* For rounded corners */
-            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            max-width: 900px;
+            width: 100%;
         }
+
         th, td {
-            border: 1px solid #d4d4d8; /* zinc-300 */
+            border: 1px solid #d4d4d8;
             padding: 0.75rem 1rem;
             text-align: left;
         }
+
         th {
-            background-color: #f4f4f5; /* zinc-100 */
+            background-color: #f4f4f5;
             font-weight: 600;
         }
+
         td {
             background-color: #ffffff;
         }
+
+        code {
+            background: #e5e7eb;
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.25rem;
+            font-family: monospace;
+            font-size: 0.9em;
+        }
+
+        .red { color: #dc2626; font-weight: 700; }
+        .green { color: #16a34a; font-weight: 700; }
+        .purple { color: #9333ea; font-weight: 700; }
+        .orange { color: #f97316; font-weight: 700; }
+        .blue { color: #2563eb; font-weight: 700; } /* Aggiunto colore per Cluster D */
+
+        ul {
+            list-style: disc;
+            margin-left: 1.5rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .compact-list {
+            margin-top: 1rem;
+            margin-left: 0;
+            list-style: none;
+            padding: 0;
+        }
+        
+        .compact-list li {
+            font-size: 1rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .checkmark {
+            color: #2563eb;
+            font-weight: 700;
+            margin-right: 0.75rem;
+            margin-top: 0.25rem;
+        }
+
+        #controls {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #1f2937;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        button {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 700;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background: #1d4ed8;
+        }
+
+        button:disabled {
+            background: #6b7280;
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        #info {
+            color: white;
+            font-size: 1.125rem;
+            font-weight: 500;
+        }
     </style>
 </head>
-<body class="bg-gray-100 text-gray-900">
+<body>
 
-    <!-- Slide Container -->
-    <div id="slide-container" class="relative w-full h-full">
-
-        <!-- Slide 1: Title -->
-        <div class="slide bg-white">
-            <h1 class="text-4xl md:text-5xl font-bold text-blue-700 mb-6">Automated Analysis of 20th Century Italian Asylum Patient Writings</h1>
-            <h2 class="text-2xl md:text-3xl font-light text-gray-700 mb-10">Methods and Results from the PsyCreat Study</h2>
-            <div class="text-left text-lg max-w-3xl space-y-3">
-                <p class="flex items-start"><span class="text-blue-600 font-bold mr-3 mt-1">1.</span> A corpus of patient-authored texts.</p>
-                <p class="flex items-start"><span class="text-blue-600 font-bold mr-3 mt-1">2.</span> Automated extraction of conceptual frames based on an ontology.</p>
-                <p class="flex items-start"><span class="text-blue-600 font-bold mr-3 mt-1">3.</span> Automated scoring of text creativity and authoriality.</p>
-                <p class="flex items-start"><span class="text-blue-600 font-bold mr-3 mt-1">4.</span> Clustering of frames, texts, and authors and their relation to scores.</p>
+<div id="slideshow">
+    <div class="slide active">
+        <h1>Automated Analysis of 20th Century Italian Asylum Patient Writings</h1>
+        <p class="subtitle">Clustering Conceptual Frames, Texts, and Authors in the PsyCreat Study</p>
+        <div style="text-align: left; max-width: 900px;">
+            <div class="list-item">
+                <span class="list-number">1.</span>
+                <span>The Corpus and Automated Frame Extraction.</span>
+            </div>
+            <div class="list-item">
+                <span class="list-number">2.</span>
+                <span>Clustering by Conceptual Frames (Semantic Roles).</span>
+            </div>
+            <div class="list-item">
+                <span class="list-number">3.</span>
+                <span>Clustering by Author Profile (Diagnosis, Occupation, Frames).</span>
+            </div>
+            <div class="list-item">
+                <span class="list-number">4.</span>
+                <span>Clustering by Quantitative Scores (Creativity & Authoriality).</span>
             </div>
         </div>
+    </div>
 
-        <!-- Slide 2: The Corpus -->
-        <div class="slide bg-white hidden">
-            <h2 class="text-3xl md:text-4xl font-bold text-blue-700 mb-8">1. The Corpus: Patient-Authored Texts</h2>
-            <p class="text-xl text-gray-700 max-w-3xl mb-8">
-                The study is based on a unique collection of texts authored by patients at an Italian asylum during the 20th century (from <code>concatenated_file.txt</code>).
-            </p>
-            <h3 class="text-2xl font-semibold mb-4">Example Text:</h3>
-            <pre>
-ID:1
-Author: Michele Pappalardo
-Title: Untitled
+
+    <!-- Slide 2: The Corpus -->
+    <div class="slide">
+        <h2>The Corpus: Patient-Authored Texts</h2>
+        <p style="margin-bottom: 2rem;">
+            The study is based on a unique collection of texts authored by patients at an Italian asylum during the 20th century.
+        </p>
+        <h3>Example Text (doc_1):</h3>
+        <pre>Author: Michele Pappalardo
 Date: 8 agosto 1929
 Type: Letter
 
 Carissimo Calogero
-Maisano sta benissimo a efa sua, arzente a Fioravanti e Orlandino del Leone.
-Ozia ala ordita da Sale vafio ornante pedi zeili di chi ofelio il Monte 
-Sion al Vezzo antico a zaino fodero uvile mazzo fedele Vacircato a Vaisa 
-opera demoni a efe.
-...
-            </pre>
-            <p class="mt-4 text-gray-600 italic">This text (doc_1) is described in <code>allcreativitydata.tsv</code> as a "dense, systematic, and highly elaborated private language (cryptolect)."</p>
+Maisano sta benissimo a efa sua, arzente a Fioravanti 
+e Orlandino del Leone. Ozia ala ordita da Sale vafio 
+ornante pedi zeili di chi ofelio il Monte Sion al 
+Vezzo antico a zaino fodero uvile mazzo fedele 
+Vacircato a Vaisa opera demoni a efe...</pre>
+        <p style="margin-top: 1rem; font-style: italic; color: #6b7280;">
+            A systematic, highly elaborated private language (cryptolect).
+        </p>
+    </div>
+
+<div class="slide">
+        <h2>Modello di Analisi: Un Framework "Dual-Task"</h2>
+        <p style="margin-bottom: 1.5rem;">
+            L'analisi quantitativa misura due dimensioni testuali distinte e indipendenti, integrate da un'analisi qualitativa.
+        </p>
+        
+        <div class="flex-container" style="max-width: 1100px;">
+            <div class="content-box">
+                <h3 class="purple" style="margin-top: 0;">1. Creatività Divergente</h3>
+                <p style="font-size: 1rem; line-height: 1.3;">
+                    Misura la novità, la divergenza dalle norme e la capacità di creare nuove coerenze significative ("meta-convergenza").
+                </p>
+            </div>
+            <div class="content-box">
+                <h3 class="green" style="margin-top: 0;">2. Autorialità (WAAS)</h3>
+                <p style="font-size: 1rem; line-height: 1.3;">
+                    Misura il grado di controllo formale e cognitivo esercitato dall'autore (coerenza, organizzazione, consapevolezza retorica).
+                </p>
+            </div>
+            <div class="content-box">
+                <h3 class="blue" style="margin-top: 0;">3. Semantica dei Frame</h3>
+                <p style="font-size: 1rem; line-height: 1.3;">
+                    L'analisi qualitativa (Fillmore) estrae le architetture concettuali (frame, ruoli, partecipanti) usate dall'autore.
+                </p>
+            </div>
         </div>
+        <p style="margin-top: 1.5rem; font-style: italic; color: #6b7280;">
+            Questa indipendenza permette di mappare testi sia innovativi ma frammentati, sia convenzionali ma formalmente sofisticati.
+        </p>
+    </div>
 
-        <!-- Slide 3: The Ontology -->
-        <div class="slide bg-white hidden">
-            <h2 class="text-3xl md:text-4xl font-bold text-blue-700 mb-8">2. The Method: The Ontology Schema</h2>
-            <p class="text-xl text-gray-700 max-w-3xl mb-8">
-                We first built an ontology (<code>psycreat.ttl</code>) to formally model the relationships between authors, texts, and concepts.
-            </p>
-            <h3 class="text-2xl font-semibold mb-4">Key Ontology Classes & Properties:</h3>
-            <pre>
-<!-- Example from psycreat.ttl -->
-:Document rdf:type owl:Class ;
-    rdfs:label "Document" .
+    <div class="slide">
+        <h2>Metodo 1: Misurare la Creatività Divergente</h2>
+        <p style="margin-bottom: 1.5rem;">
+            Il framework della "meta-convergenza" opera lungo tre assi analitici (simile ai test TTCT di Torrance).
+        </p>
+        
+        <div class="flex-container" style="max-width: 1100px;">
+            <div class="content-box">
+                <h3 style="margin-top: 0;">Asse 1: Background Knowledge</h3>
+                <ul class="compact-list" style="font-size: 1rem;">
+                    <li>Globale (cultura generale)</li>
+                    <li>Locale (contesto del corpus)</li>
+                    <li>Temporale (contesto storico)</li>
+                    <li>Contestuale (specifico del testo)</li>
+                </ul>
+            </div>
+            <div class="content-box">
+                <h3 style="margin-top: 0;">Asse 2: Prospettive</h3>
+                <ul class="compact-list" style="font-size: 1rem;">
+                    <li>Analisi Formale (struttura)</li>
+                    <li>Analisi del Contenuto (Conceptual Blending)</li>
+                </ul>
+            </div>
+            <div class="content-box">
+                <h3 style="margin-top: 0;">Asse 3: Dimensioni Valutative</h3>
+                <ul class="compact-list" style="font-size: 1rem;">
+                    <li><strong>Appropriatezza:</strong>
+                        <br>↳ Fluenza (ricchezza)
+                        <br>↳ Flessibilità (varietà)
+                    </li>
+                    <li><strong>Divergenza Creativa:</strong>
+                        <br>↳ Novità (originalità)
+                        <br>↳ Elaborazione (sviluppo)
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
 
-:Author rdf:type owl:Class ;
-    rdfs:label "Author" .
+    <div class="slide">
+        <h2>Metodo 2: Misurare l'Autorialità (WAAS)</h2>
+        <p style="margin-bottom: 1.5rem;">
+            Misura il grado di controllo formale e cognitivo sintetizzato in un punteggio aggregato (WAAS).
+        </p>
+        
+        <div class="flex-container" style="max-width: 1000px;">
+            <div class="content-box" style="flex: 1.5;">
+                <h3 class="green" style="margin-top: 0;">Sei Parametri di Controllo</h3>
+                <ul class="compact-list" style="font-size: 1rem; columns: 2;">
+                    <li>1. Systematicity (Coerenza)</li>
+                    <li>2. Fragmentation (Discontinuità)</li>
+                    <li>3. Rhetorical Awareness</li>
+                    <li>4. Private Expression</li>
+                    <li>5. Metaphorical Control</li>
+                    <li>6. Literal Belief (Credenza letterale)</li>
+                </ul>
+            </div>
+            <div class="content-box" style="flex: 1;">
+                <h3 style="margin-top: 0;">Punteggio WAAS</h3>
+                <p style="font-size: 1rem; line-height: 1.3;">
+                    Il <strong>WAAS</strong> (Weighted Aggregated Authoriality Score) quantifica la "forza autoriale" complessiva del testo, premiando l'alta coerenza e il controllo retorico.
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="slide">
+        <h2>Metodo 3: Analisi Qualitativa (Frame Semantics)</h2>
+        <p style="margin-bottom: 1.5rem;">
+            Fondato su Fillmore (1982), questo metodo analizza come le parole evocano scenari concettuali strutturati (i "frame").
+        </p>
+        
+        <div class="flex-container" style="max-width: 1000px;">
+            <div class="content-box">
+                <h3 class="blue" style="margin-top: 0;">Processo di Estrazione</h3>
+                <p style="font-size: 1rem; line-height: 1.3;">
+                    È stato condotto un inventario sistematico dei frame istanziati nei testi per mappare le architetture tematiche del corpus.
+                </p>
+            </div>
+            <div class="content-box">
+                <h3 style="margin-top: 0;">Cosa viene Estratto</h3>
+                <p style="font-size: 1rem; line-height: 1.3;">
+                    Per ogni frame, identifichiamo:
+                    <br>
+                    1. <strong>Partecipanti</strong> (es. Autore, Medico)
+                    <br>
+                    2. <strong>Ruoli Semantici</strong> (es. <code>:hasVictim</code>, <code>:hasAgent</code>)
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="slide">
+        <h2>Supporto Computazionale: L'Ontologia Formale</h2>
+        <p style="margin-bottom: 1.5rem;">
+            Un'ontologia formale (<code>psycreat.ttl</code>) modella e collega l'analisi semantica con i metadati dei pazienti e dei testi.
+        </p>
+        
+        <div class="flex-container" style="max-width: 1000px;">
+            <div class="content-box">
+                <h3 style="margin-top: 0;">Componente 1: Metadati</h3>
+                <ul class="compact-list" style="font-size: 1rem;">
+                    <li><strong>Paziente:</strong> Dati biografici, occupazione, storia istituzionale.</li>
+                    <li><strong>Diagnosi:</strong> Mappate sistematicamente alle categorie DSM-5.</li>
+                    <li><strong>Testo:</strong> Autore, data di composizione, proprietà materiali.</li>
+                </ul>
+            </div>
+            <div class="content-box">
+                <h3 style="margin-top: 0;">Componente 2: Analisi Semantica</h3>
+                <ul class="compact-list" style="font-size: 1rem;">
+                    <li>Modella l'analisi qualitativa.</li>
+                    <li>Collega i <strong>Testi</strong> ai <strong>Frame</strong> che essi evocano (es. <code>:denotes</code>).</li>
+                    <li>Collega gli <strong>Autori</strong> ai <strong>Testi</strong> (es. <code>:isAuthorOf</code>).</li>
+                </ul>
+            </div>
+        </div>
+    </div>
 
-:Frame rdf:type owl:Class ;
-    rdfs:label "Frame" .
+    <!-- Slide 3: The Ontology -->
+    <div class="slide">
+        <h2>The Method: The Ontology Schema</h2>
+        <p style="margin-bottom: 2rem;">
+            We built an ontology (<code>psycreat.ttl</code>) to formally model relationships between authors, texts, and conceptual frames.
+        </p>
+        <h3>Key Ontology Classes & Properties:</h3>
+        <pre>:Document rdf:type owl:Class .
+:Author rdf:type owl:Class .
+:Frame rdf:type owl:Class .
 
 :isAuthorOf rdf:type owl:ObjectProperty ;
     rdfs:domain :Author ;
@@ -141,277 +457,522 @@ opera demoni a efe.
     rdfs:range :Frame .
 
 :hasMainDiseaseCondition rdf:type owl:ObjectProperty ;
-    rdfs:domain :Author .
-            </pre>
-        </div>
+    rdfs:domain :Author .</pre>
+    </div>
 
-        <!-- Slide 4: Frame Extraction -->
-        <div class="slide bg-white hidden">
-            <h2 class="text-3xl md:text-4xl font-bold text-blue-700 mb-8">2. The Method: Automated Frame Extraction</h2>
-            <p class="text-xl text-gray-700 max-w-3xl mb-8">
-                Using this ontology, we processed the corpus to create a Knowledge Graph (<code>psycreatkg.ttl</code>) by extracting specific conceptual frames from the texts.
-            </p>
-            <h3 class="text-2xl font-semibold mb-4">Example Extracted Frame (doc_371):</h3>
-            <pre>
-<!-- Example from psycreatkg.ttl -->
-kg:antireligioussentiment_4 rdf:type :Anti_religious_Sentiment ;
-    rdfs:label "antireligioussentiment_4" ;
+    <!-- Slide 4: Frame Extraction -->
+    <div class="slide">
+        <h2>The Method: Automated Frame Extraction</h2>
+        <p style="margin-bottom: 2rem;">
+            Using this ontology, we processed the corpus to create a Knowledge Graph (<code>psycreatkg.ttl</code>) by extracting conceptual frames.
+        </p>
+        <h3>Example Extracted Frame (doc_371):</h3>
+        <pre>kg:antireligioussentiment_4 rdf:type :Anti_religious_Sentiment ;
     :evokesFrame :Anti_religious_Sentiment ;
     :appearsInDocument kg:doc_371 ;
     :hasProtagonist kg:Nioi_Antonio ;
-    :hasTarget kg:Paolo_VI_detto_santo_padre ;
-    :hasTarget kg:Giudeo_Cristo .
+    :hasTarget kg:Paolo_VI_detto_santo_padre .
 
-kg:grandiosedelusionsreincarnationhistorical_2 rdf:type :Grandiose_Delusions ;
+kg:grandiosedelusionsreincarnationhistorical_2 
+    rdf:type :Grandiose_Delusions ;
     :appearsInDocument kg:doc_371 ;
-    :hasTheme "un secondo Caio Giulio Cesare moderno!" .
-            </pre>
-        </div>
+    :hasTheme "un secondo Caio Giulio Cesare moderno!" .</pre>
+    </div>
 
-        <!-- Slide 5: Scoring Creativity & Authoriality -->
-        <div class="slide bg-white hidden">
-            <h2 class="text-3xl md:text-4xl font-bold text-blue-700 mb-8">3. The Method: Scoring Creativity & Authoriality</h2>
-            <p class="text-xl text-gray-700 max-w-3xl mb-8">
-                Each text was quantitatively scored for "Creativity" (divergence from convention) and "Authoriality" (rhetorical control) using data from <code>allcreativitydata.tsv</code>.
-            </p>
-            <h3 class="text-2xl font-semibold mb-4">Key Metrics & Example Scores:</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Metric</th>
-                        <th>Description</th>
-                        <th>Doc_1 (Pappalardo)</th>
-                        <th>Doc_371 (Nioi)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><code>Creativity_minmax_z</code></td>
-                        <td>Divergence from convention</td>
-                        <td class="text-red-600 font-bold">0.999 (Highest)</td>
-                        <td>0.350</td>
-                    </tr>
-                    <tr>
-                        <td><code>Authoriality_WAAS_minmax</code></td>
-                        <td>Authorial / rhetorical control</td>
-                        <td>0.811 (High)</td>
-                        <td>0.710 (High)</td>
-                    </tr>
-                    <tr>
-                        <td><code>CreatWaas_minmax</code></td>
-                        <td>Combined Creativity/Authoriality</td>
-                        <td class="text-red-600 font-bold">0.998 (Highest)</td>
-                        <td>0.801 (High)</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
 
-        <!-- Slide 6: Clustering Analysis -->
-        <div class="slide bg-white hidden">
-            <h2 class="text-3xl md:text-4xl font-bold text-blue-700 mb-8">4. The Analysis: Conceptual Clusters</h2>
-            <p class="text-xl text-gray-700 max-w-3xl mb-8">
-                Clustering frames, texts, and authors (from <code>mandalariclusters.md</code>) revealed two dominant, opposing authorial profiles.
-            </p>
-            <div class="flex flex-col md:flex-row gap-8 w-full max-w-5xl">
-                <!-- Cluster A -->
-                <div class="flex-1 bg-gray-50 p-6 rounded-lg border border-gray-200">
-                    <h3 class="text-2xl font-bold text-red-700 mb-4">Cluster A: The "Visionary"</h3>
-                    <p class="text-lg font-semibold mb-3">Conflict & Persecution (Literal Belief)</p>
-                    <p class="text-left space-y-2">
-                        <strong>Frames:</strong> <code>:Persecution</code>, <code>:Political_Rebellion_Threat</code>, <code>:Grandiose_Delusions</code>, <code>:Conspiracy</code>
-                    </p>
-                    <p class="mt-4"><strong>Scores:</strong> Tends toward <strong>High Creativity</strong> (high divergence) but <strong>Low Authoriality</strong> (low metaphorical control).</p>
-                </div>
-                <!-- Cluster B -->
-                <div class="flex-1 bg-gray-50 p-6 rounded-lg border border-gray-200">
-                    <h3 class="text-2xl font-bold text-green-700 mb-4">Cluster B: The "Classic Artist"</h3>
-                    <p class="text-lg font-semibold mb-3">Art & Metaphor (Rhetorical Control)</p>
-                     <p class="text-left space-y-2">
-                        <strong>Frames:</strong> <code>:Poetry</code>, <code>:Fable</code>, <code>:Political_Satire</code>, <code>:Fantastical_Mythological_Journey</code>
-                    </p>
-                    <p class="mt-4"><strong>Scores:</strong> Tends toward <strong>Low Creativity</strong> (conventional forms) but <strong>High Authoriality</strong> (high rhetorical control).</p>
-                </div>
+<div class="slide">
+        <h2>Conceptual Clustering: Semantic Frames</h2>
+        <p style="margin-bottom: 1.5rem;">
+            Clustering le tipologie di Frame ha rivelato "super-cluster" basati sulle funzioni semantiche (ruoli) che esse condividono.
+        </p>
+        <div class="flex-container" style="max-width: 1000px;">
+            <div class="content-box">
+                <h3 class="red" style="margin-top: 0;">Cluster A: Conflict & Persecution</h3>
+                <p style="font-weight: 600; margin-bottom: 0.5rem; font-size: 1rem;">Antagonism and Victimhood</p>
+                <p style="font-size: 0.95rem;"><strong>Frames:</strong> <code>:Persecution</code>, <code>:Conspiracy</code>, <code>:Torture</code>.</p>
+                <p style="font-size: 0.95rem;"><strong>Ruoli Chiave:</strong> <code>:hasAgent</code> (Persecutore) e <code>:hasVictim</code> (Autore/Vittima).</p>
+            </div>
+            <div class="content-box">
+                <h3 class="purple" style="margin-top: 0;">Cluster B: Grandiose Self</h3>
+                <p style="font-weight: 600; margin-bottom: 0.5rem; font-size: 1rem;">Introspection and Proclamation</p>
+                <p style="font-size: 0.95rem;"><strong>Frames:</strong> <code>:Grandiose_Delusions</code>, <code>:Mission</code>, <code>:Prophecy_Revelation</code>.</p>
+                <p style="font-size: 0.95rem;"><strong>Ruoli Chiave:</strong> <code>:hasProtagonist</code> (Autore) e <code>:hasTheme</code> (Soggetto della grandiosità).</p>
             </div>
         </div>
+        <div class="flex-container" style="max-width: 1000px;">
+            <div class="content-box">
+                <h3 class="green" style="margin-top: 0;">Cluster C: Authority & Appeal</h3>
+                <p style="font-weight: 600; margin-bottom: 0.5rem; font-size: 1rem;">Transactional and Bureaucratic</p>
+                <p style="font-size: 0.95rem;"><strong>Frames:</strong> <code>:Appeal_to_Authority</code>, <code>:Plea_for_Release</code>, <code>:Vindication_Justice</code>.</p>
+                <p style="font-size: 0.95rem;"><strong>Ruoli Chiave:</strong> <code>:hasRequester</code> (Autore) e <code>:hasAddressee</code> (Autorità).</p>
+            </div>
+            <div class="content-box">
+                <h3 class="blue" style="margin-top: 0;">Cluster D: Interpersonal & Family</h3>
+                <p style="font-weight: 600; margin-bottom: 0.5rem; font-size: 1rem;">Relational Conflicts & Pleas</p>
+                <p style="font-size: 0.95rem;"><strong>Frames:</strong> <code>:Family_Conflict</code>, <code>:Marital_Conflict</code>, <code>:Abandonment</code>.</p>
+                <p style="font-size: 0.95rem;"><strong>Ruoli Chiave:</strong> <code>:hasAntagonist</code> (Membro in Conflitto) e <code>:hasAddressee</code> (Membro della Famiglia).</p>
+            </div>
+        </div>
+    </div>
 
-        <!-- Slide 7: Finding 1 -->
-        <div class="slide bg-white hidden">
-            <h2 class="text-3xl md:text-4xl font-bold text-blue-700 mb-8">Finding 1: The "Visionary" Profile</h2>
-            <h3 class="text-2xl font-semibold mb-4">Author: <span class="font-bold text-red-700">Pappalardo Michele</span></h3>
-            <p class="text-xl text-gray-700 max-w-3xl mb-8">
-                Pappalardo is the archetype of the "Visionary." His text (doc_1) is a systematic, private language ("cryptolect") that is taken as literal truth.
-            </p>
-            <!-- Data from allcreativitydata.tsv and mandalariclusters.md -->
-            <div class="flex gap-8">
-                <div class="bg-gray-50 p-6 rounded-lg border border-gray-200 text-left">
-                    <h4 class="text-xl font-semibold mb-3">Dominant Frames</h4>
-                    <ul class="list-disc list-inside">
-                        <li><code>:Cryptolect</code> (Private Language)</li>
-                        <li><code>:Persecutory_Delusion</code></li>
-                        <li><code>:Conspiracy</code></li>
-                    </ul>
-                </div>
-                 <div class="bg-gray-50 p-6 rounded-lg border border-gray-200 text-left">
-                    <h4 class="text-xl font-semibold mb-3">Quantitative Profile</h4>
-                    <ul class="list-disc list-inside">
-                        <li><strong>Creativity Score: 0.999</strong> (Rank #1)</li>
-                        <li><strong>Authoriality Score: 0.811</strong> (Rank #3)</li>
-                        <li><strong>Profile:</strong> Maximum divergence, presented with literal belief.</li>
-                    </ul>
-                </div>
+
+    <div class="slide">
+        <h2>Conceptual Clustering: Author Profiles</h2>
+        <p style="margin-bottom: 1.5rem;">
+            Il raggruppamento degli autori combina Diagnosi, Occupazione e Frame Semantici per creare "impronte semantiche" distinte.
+        </p>
+        
+        <div class="flex-container" style="max-width: 1000px;">
+            <div class="content-box">
+                <h3 class="red" style="margin-top: 0;">Cluster 1: Paranoid-Persecutory</h3>
+                <p style="font-size: 1rem; line-height: 1.3;">
+                    Focus: Minaccia Esterna e Conflitto. 
+                    <br><strong>Diagnosi:</strong> <code>:Paranoid_Syndrome</code>.
+                    <br><strong>Frame:</strong> <code>:Persecution</code>, <code>:Conspiracy</code>, <code>:Poisoning</code>.
+                    <br><span style="font-size: 0.9rem; color: #6b7280;">*Autori Es.: Pappalardo M., Astri N.*</span>
+                </p>
+            </div>
+            <div class="content-box">
+                <h3 class="purple" style="margin-top: 0;">Cluster 2: Grandiose-Mystical</h3>
+                <p style="font-size: 1rem; line-height: 1.3;">
+                    Focus: Identità Espansa e Messianica.
+                    <br><strong>Diagnosi:</strong> <code>:Schizophrenia</code>, <code>:Dementia_Praecox</code>.
+                    <br><strong>Frame:</strong> <code>:Grandiose_Delusions</code>, <code>:Mission</code>, <code>:Neologisms</code>.
+                    <br><span style="font-size: 0.9rem; color: #6b7280;">*Autori Es.: Sanfilippo O., Graziano L.*</span>
+                </p>
             </div>
         </div>
         
-        <!-- Slide 8: Finding 2 -->
-        <div class="slide bg-white hidden">
-            <h2 class="text-3xl md:text-4xl font-bold text-blue-700 mb-8">Finding 2: The "Classic Artist" Profile</h2>
-            <h3 class="text-2xl font-semibold mb-4">Author: <span class="font-bold text-green-700">Sacco Giuseppe</span></h3>
-            <p class="text-xl text-gray-700 max-w-3xl mb-8">
-                Sacco is the archetype of the "Classic Artist." He uses conventional literary forms (fables, poems) with clear rhetorical control and metaphorical distance.
-            </p>
-            <!-- Data from allcreativitydata.tsv and mandalariclusters.md -->
-            <div class="flex gap-8">
-                <div class="bg-gray-50 p-6 rounded-lg border border-gray-200 text-left">
-                    <h4 class="text-xl font-semibold mb-3">Dominant Frames</h4>
-                    <ul class="list-disc list-inside">
-                        <li><code>:Fable</code></li>
-                        <li><code>:Poetry</code></li>
-                        <li><code>:Novella</code></li>
-                    </ul>
-                </div>
-                 <div class="bg-gray-50 p-6 rounded-lg border border-gray-200 text-left">
-                    <h4 class="text-xl font-semibold mb-3">Quantitative Profile</h4>
-                    <ul class="list-disc list-inside">
-                        <li><strong>Creativity Score: 0.288</strong> (Low)</li>
-                        <li><strong>Authoriality Score: 0.865</strong> (Rank #1)</li>
-                        <li><strong>Profile:</strong> High rhetorical skill and control over metaphors.</li>
-                    </ul>
-                </div>
+        <div class="flex-container" style="max-width: 1000px;">
+             <div class="content-box">
+                <h3 class="orange" style="margin-top: 0;">Cluster 3: Authoritarian-Conflict</h3>
+                <p style="font-size: 1rem; line-height: 1.3;">
+                    Focus: Gerarchia, Regole e Giustizia.
+                    <br><strong>Occupazione:</strong> <code>:Military</code>, <code>:Prison_Guard</code>.
+                    <br><strong>Frame:</strong> <code>:Appeal_to_Authority</code>, <code>:Official_Report</code>.
+                    <br><span style="font-size: 0.9rem; color: #6b7280;">*Autori Es.: D'Amico O., Di Blasi A.*</span>
+                </p>
             </div>
-        </div>
-
-        <!-- Slide 9: Finding 3 -->
-        <div class="slide bg-white hidden">
-            <h2 class="text-3xl md:text-4xl font-bold text-blue-700 mb-8">Finding 3: The "Hybrid" Author</h2>
-            <h3 class="text-2xl font-semibold mb-4">Author: <span class="font-bold text-purple-700">Sacca Antonino</span></h3>
-            <p class="text-xl text-gray-700 max-w-3xl mb-8">
-                Sacca Antonino is a rare "hybrid" who scores at the top of *both* lists, demonstrating mastery of both conceptual clusters.
-            </p>
-            <!-- Data from mandalariclusters.md -->
-            <div class="flex flex-col md:flex-row gap-8 w-full max-w-5xl">
-                <div class="flex-1 bg-gray-50 p-6 rounded-lg border border-gray-200 text-left">
-                    <h4 class="text-xl font-semibold mb-3 text-green-700">"Classic Artist" Frames</h4>
-                    <ul class="list-disc list-inside">
-                        <li><code>:Political_Satire</code></li>
-                        <li><code>:Fantastical_Mythological_Journey</code></li>
-                        <li>(High metaphorical control)</li>
-                    </ul>
-                </div>
-                 <div class="flex-1 bg-gray-50 p-6 rounded-lg border border-gray-200 text-left">
-                    <h4 class="text-xl font-semibold mb-3 text-red-700">"Visionary" Frames</h4>
-                    <ul class="list-disc list-inside">
-                        <li><code>:Anti_fascism</code></li>
-                        <li class="break-words"><code>:Political_Rebellion_Threat</code></li>
-                        <li><code>:Persecution</code> ("luogo di tortura")</li>
-                        <li>(100% literal belief)</li>
-                    </ul>
-                </div>
-            </div>
-            <p class="mt-6 text-lg font-semibold"><strong>Scores:</strong> <code>CreatWaas_minmax</code>: 0.804 (Rank #2), <code>Authoriality_WAAS_minmax</code>: 0.831 (Rank #2)</p>
-        </div>
-
-        <!-- Slide 10: Conclusion -->
-        <div class="slide bg-white hidden">
-            <h2 class="text-3xl md:text-4xl font-bold text-blue-700 mb-8">Conclusions & Implications</h2>
-            <div class="text-left text-xl max-w-3xl space-y-6">
-                <p class="flex items-start">
-                    <span class="text-blue-600 font-bold mr-3 mt-1">&#10003;</span>
-                    Automated methods can successfully model, extract, and score complex conceptual frames from psychiatric texts.
-                </p>
-                <p class="flex items-start">
-                    <span class="text-blue-600 font-bold mr-3 mt-1">&#10003;</span>
-                    "Creativity" (divergence) and "Authoriality" (control) are distinct, measurable constructs that are not mutually exclusive.
-                </p>
-                <p class="flex items-start">
-                    <span class="text-blue-600 font-bold mr-3 mt-1">&#10003;</span>
-                    Conceptual frame clusters (e.g., "Visionary" vs. "Artist") correlate strongly with these quantitative scores, linking semantics to metrics.
-                </p>
-                <p class="flex items-start">
-                    <span class="text-blue-600 font-bold mr-3 mt-1">&#10003;</span>
-                    This provides a new, scalable method for digital humanities and the computational study of "outsider art" and unique textual production.
+            <div class="content-box">
+                <h3 class="green" style="margin-top: 0;">Cluster 4: Educated/Professional</h3>
+                <p style="font-size: 1rem; line-height: 1.3;">
+                    Focus: Struttura Formale e Temi Intellettuali.
+                    <br><strong>Occupazione:</strong> <code>:Teacher</code>, <code>:Accountant</code>.
+                    <br><strong>Frame:</strong> <code>:Philosophical_Reflection</code>, <code>:Poetic_Expression</code>.
+                    <br><span style="font-size: 0.9rem; color: #6b7280;">*Autori Es.: Gabriele A., Ioppolo G.*</span>
                 </p>
             </div>
         </div>
-
     </div>
 
-    <!-- Navigation -->
-    <div class="fixed bottom-0 left-0 right-0 bg-gray-800 text-white p-4 flex justify-between items-center shadow-inner z-10">
-        <button id="prev" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg transition duration-300 shadow-md disabled:opacity-50 disabled:cursor-not-allowed">Previous</button>
-        <span id="slide-counter" class="text-lg font-medium">Slide 1 of 10</span>
-        <button id="next" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-6 rounded-lg transition duration-300 shadow-md disabled:opacity-50 disabled:cursor-not-allowed">Next</button>
+    <div class="slide">
+        <h2>Conceptual Clustering: Text Narratives</h2>
+        <p style="margin-bottom: 1.5rem;">
+            Il raggruppamento dei testi basato sul contenuto e sui Frame del singolo documento.
+        </p>
+        
+        <div class="flex-container" style="max-width: 1000px;">
+            <div class="content-box">
+                <h3 class="red" style="margin-top: 0;">Cluster A: Persecution & Torture</h3>
+                <p style="font-size: 1rem; line-height: 1.3;">
+                    Contenuto: Resoconti dettagliati di tormento fisico/psicologico.
+                    <br><strong>Frame Chiave:</strong> <code>:Persecution</code>, <code>:Poisoning</code>, <code>:Technology_as_Persecution</code>.
+                    <br><span style="font-size: 0.9rem; color: #6b7280;">*Testi Es.: <code>kg:doc_98</code> (Raggio X), <code>kg:doc_63</code> (Villa dei supplizi).*</span>
+                </p>
+            </div>
+            <div class="content-box">
+                <h3 class="purple" style="margin-top: 0;">Cluster B: Grandiose & Prophetic</h3>
+                <p style="font-size: 1rem; line-height: 1.3;">
+                    Contenuto: Manifesti che rivendicano identità o missioni speciali (re, messia).
+                    <br><strong>Frame Chiave:</strong> <code>:Grandiose_Delusions</code>, <code>:Mission</code>, <code>:Neologisms</code>.
+                    <br><span style="font-size: 0.9rem; color: #6b7280;">*Testi Es.: <code>kg:doc_30-32</code> (Comandante papa Deu), <code>kg:doc_41-45</code> (Giovanni Battista).*</span>
+                </p>
+            </div>
+        </div>
+        
+        <div class="flex-container" style="max-width: 1000px;">
+            <div class="content-box">
+                <h3 class="orange" style="margin-top: 0;">Cluster C: Bureaucratic & Legal</h3>
+                <p style="font-size: 1rem; line-height: 1.3;">
+                    Contenuto: Appelli formali, denunce, richieste di rilascio/giustizia.
+                    <br><strong>Frame Chiave:</strong> <code>:Appeal_to_Authority</code>, <code>:Vindication_Justice</code>, <code>:Financial_Concerns</code>.
+                    <br><span style="font-size: 0.9rem; color: #6b7280;">*Testi Es.: <code>kg:doc_66-87</code> (Richieste formali), <code>kg:doc_90</code> (Denuncia legale).*</span>
+                </p>
+            </div>
+            <div class="content-box">
+                <h3 class="green" style="margin-top: 0;">Cluster D: Creative & Poetic</h3>
+                <p style="font-size: 1rem; line-height: 1.3;">
+                    Contenuto: Sforzi creativi espliciti (poesie, favole, dialoghi).
+                    <br><strong>Frame Chiave:</strong> <code>:Poetic_Expression</code>, <code>:Creative_Writing</code>, <code>:Fable_Storytelling</code>.
+                    <br><span style="font-size: 0.9rem; color: #6b7280;">*Testi Es.: <code>kg:doc_142-148</code> (Dialoghi drammatici), <code>kg:doc_126</code> (Inno degli Scugnizzi).*</span>
+                </p>
+            </div>
+        </div>
     </div>
 
-    <!-- JavaScript for Navigation -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            let currentSlide = 0;
-            const slides = document.querySelectorAll('.slide');
-            const slideCount = slides.length;
-            const slideCounter = document.getElementById('slide-counter');
-            const prevButton = document.getElementById('prev');
-            const nextButton = document.getElementById('next');
+    <div class="slide">
+        <h2>Quantitative Clustering: Distribution of Creativity</h2>
+        <p style="margin-bottom: 2rem;">
+            L'analisi della distribuzione del punteggio combinato CreatWaas\_minmax (Creatività/Autorialità) su tutti i testi.
+        </p>
+        <div class="content-box" style="text-align: center; max-width: 700px; margin: 0 auto;">
+            <p><strong>Distribuzione della Creatività (CreatWaas\_minmax):</strong></p>
+            <p style="margin-top: 1rem;">La maggior parte dei testi si colloca nella fascia medio-bassa (0.5-0.7), indicando una scrittura convenzionale.</p>
+            <p style="margin-top: 1rem;">Esiste una significativa "coda lunga" (long tail) di testi con punteggi eccezionalmente alti (> 0.8).</p>
+            <p style="margin-top: 1rem; font-weight: 700; color: #1d4ed8;">Questo cluster ad alto punteggio rappresenta sforzi creativi e autoriali potenti e distintivi, meritevoli di un'analisi più approfondita.</p>
+        </div>
+    </div>
+    
+    <div class="slide">
+        <h2>Quantitative Clustering: Top Authors</h2>
+        <p style="margin-bottom: 2rem;">
+            Clustering per punteggi medi aggregati rivela autori che eccellono in aree distinte.
+        </p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Cluster</th>
+                    <th>Metric</th>
+                    <th>Descrizione</th>
+                    <th>Top Autore</th>
+                    <th>Punteggio Medio</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><span class="red">Most Creative</span></td>
+                    <td><code>CreatWaas_minmax</code></td>
+                    <td>Novità, Divergenza Semantica.</td>
+                    <td>S. Francesco</td>
+                    <td class="red">0.827 (Mean)</td>
+                </tr>
+                <tr>
+                    <td><span class="green">Most Authorial</span></td>
+                    <td><code>Authoriality_WAAS_minmax</code></td>
+                    <td>Controllo Retorico, Coerenza Sistemica.</td>
+                    <td>Randazzo Vito</td>
+                    <td class="green">0.875 (Mean)</td>
+                </tr>
+                <tr>
+                    <td><span class="purple">The Hybrid</span></td>
+                    <td>Entrambi i punteggi</td>
+                    <td>Autori con punteggi elevati in entrambe le metriche.</td>
+                    <td>Sacca Antonino</td>
+                    <td class="purple">0.804 / 0.831</td>
+                </tr>
+            </tbody>
+        </table>
+        <p style="margin-top: 1.5rem;">
+            Autori Ibridi (Top 3 in Entrambi): Randazzo Vito, Sacca Antonino, e Scuderi Rosario combinano alta novità creativa con eccezionale controllo formale.
+        </p>
+    </div>
 
-            function showSlide(n) {
-                // Hide all slides
-                slides.forEach((slide, index) => {
-                    if (index === n) {
-                        slide.classList.remove('hidden');
-                    } else {
-                        slide.classList.add('hidden');
-                    }
-                });
-                
-                // Update counter
-                slideCounter.textContent = `Slide ${n + 1} of ${slideCount}`;
-                currentSlide = n;
+    <div class="slide">
+        <h2>Case Study: The "Visionary" Profile</h2>
+        <h3>Author: <span class="red">S. Francesco</span> (Most Creative)</h3>
+        <p style="margin-bottom: 2rem;">
+            L'autore più creativo, il cui profilo di autorialità è al servizio di una cosmologia privata e creduta letteralmente.
+        </p>
+        <div class="flex-container">
+            <div class="content-box">
+                <h3>Componenti di Autorialità</h3>
+                <p style="font-size: 1.1rem;"><code>Authoriality_Systematicity</code>: <span class="green">0.9 (Very High)</span></p>
+                <p style="font-size: 1.1rem;"><code>Authoriality_RhetoricalAwareness</code>: <span class="green">0.8 (High)</span></p>
+                <p style="font-size: 1.1rem;"><code>Authoriality_MetaphoricalControl</code>: <span class="orange">0.7 (High)</span></p>
+                <p style="font-size: 1.1rem;"><code>Authoriality_LiteralBelief</code>: <span class="red">0.8 (Very High)</span></p>
+                <p style="font-size: 1.1rem;"><code>Authoriality_PrivateExpression</code>: <span class="red">0.4 (Low-Mid)</span></p>
+            </div>
+            <div class="content-box">
+                <h3>Interpretazione</h3>
+                <ul>
+                    <li>Il testo è sistematico e persuasivo.</li>
+                    <li>L'alta creatività è dovuta a affermazioni fantastiche (biografie astrologiche) presentate come verità letterale (alto LiteralBelief).</li>
+                    <li>Il controllo autoriale è forte ma finalizzato a descrivere una realtà interna.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <div class="slide">
+        <h2>Case Study: The "Classic Author" Profile</h2>
+        <h3>Author: <span class="green">Randazzo Vito</span> (Most Authorial)</h3>
+        <p style="margin-bottom: 2rem;">
+            L'autore più "autoriale," il cui profilo riflette una chiara distanza metaforica e la creazione di arte convenzionale (poemi/dialoghi).
+        </p>
+        <div class="flex-container">
+            <div class="content-box">
+                <h3>Componenti di Autorialità</h3>
+                <p style="font-size: 1.1rem;"><code>Authoriality_Systematicity</code>: <span class="green">0.9 (Very High)</span></p>
+                <p style="font-size: 1.1rem;"><code>Authoriality_RhetoricalAwareness</code>: <span class="green">0.8 (High)</span></p>
+                <p style="font-size: 1.1rem;"><code>Authoriality_MetaphoricalControl</code>: <span class="green">0.79 (Very High)</span></p>
+                <p style="font-size: 1.1rem;"><code>Authoriality_LiteralBelief</code>: <span class="red">0.21 (Very Low)</span></p>
+                <p style="font-size: 1.1rem;"><code>Authoriality_PrivateExpression</code>: <span class="red">0.1 (Very Low)</span></p>
+            </div>
+            <div class="content-box">
+                <h3>Interpretazione</h3>
+                <ul>
+                    <li>L'autore sta consapevolmente creando arte (poemi e dialoghi drammatici).</li>
+                    <li>Il punteggio di LiteralBelief è estremamente basso perché non sta riportando la sua realtà.</li>
+                    <li>Il basso PrivateExpression indica che il lavoro è inteso per un pubblico (arte pubblica).</li>
+                    <li>Il profilo è quello di un artista classico con massimo controllo retorico.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
 
-                // Update button states
-                prevButton.disabled = (n === 0);
-                nextButton.disabled = (n === slideCount - 1);
+    <div class="slide">
+        <h2>Conclusions & Implications</h2>
+        <div style="text-align: left; max-width: 900px; font-size: 1.25rem;">
+            <div class="list-item">
+                <span class="checkmark">✓</span>
+                <span>Il Clustering Concettuale (Frame, Diagnosi, Occupazione) identifica profili di autori e testi fortemente correlati (es. Persecutorio vs. Professionale).</span>
+            </div>
+            <div class="list-item">
+                <span class="checkmark">✓</span>
+                <span>Creativity (Divergenza) e Authoriality (Controllo) non sono mutualmente esclusive, ma sono espresse in profili distinti (Visionario vs. Autore Classico).</span>
+            </div>
+            <div class="list-item">
+                <span class="checkmark">✓</span>
+                <span>L'analisi dei punteggi per componente (Literal Belief vs. Metaphorical Control) spiega le differenze semantiche tra i cluster concettuali.</span>
+            </div>
+            <div class="list-item">
+                <span class="checkmark">✓</span>
+                <span>Il metodo offre una nuova, scalabile prospettiva per lo studio computazionale della creatività nelle Digital Humanities e nel contesto psichiatrico.</span>
+            </div>
+        </div>
+    </div>
+
+<div class="slide">
+        <h1>Patterns Temporali e Contesto Storico</h1>
+        <p class="subtitle">Interazione tra Eventi Storici, Diagnosi e Linguaggio (1892-1971)</p>
+        <div style="text-align: left; max-width: 900px;">
+            <div class="list-item">
+                <span class="list-number">1.</span>
+                <span>Distribuzione Archivistica e Lacune Storiche.</span>
+            </div>
+            <div class="list-item">
+                <span class="list-number">2.</span>
+                <span>Shift Diagnostico: Concentrazione Paranoide nel Fascismo.</span>
+            </div>
+            <div class="list-item">
+                <span class="list-number">3.</span>
+                <span>Variazione di Creatività e Temi Semantici.</span>
+            </div>
+            <div class="list-item">
+                <span class="list-number">4.</span>
+                <span>Il Contesto Politico come Struttura Narrativa.</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide">
+        <h2>Distribuzione e Lacune Archivistiche</h2>
+        <p style="margin-bottom: 2rem;">
+            Il corpus (N=371) è distribuito in modo irregolare, riflettendo lacune storiche cruciali:
+        </p>
+        <div class="flex-container" style="max-width: 1000px;">
+            <div class="content-box">
+                <h3 class="red" style="margin-top: 0;">Assenza Critica (Gaps)</h3>
+                <ul class="compact-list" style="margin-top: 0.5rem;">
+                    <li><span class="red">Post-WWI (1918–1921):</span> n=2 (0.5%)</li>
+                    <li><span class="red">Inizio Fascismo (1922–1928):</span> n=1 (0.3%)</li>
+                    <li><strong>Corrispondenza:</strong> Periodo del <em>biennio rosso</em>, collasso liberale e presa di potere fascista.</li>
+                </ul>
+            </div>
+            <div class="content-box">
+                <h3 class="green" style="margin-top: 0;">Picchi di Concentrazione</h3>
+                <ul class="compact-list" style="margin-top: 0.5rem;">
+                    <li><span class="green">Consolidamento Fascista (1930–1935):</span> n=76 (20% del corpus)</li>
+                    <li><span class="green">Picco Massimo (1934–1935):</span> n=55 (15% del totale)</li>
+                    <li><strong>Significato:</strong> Indica l'intensificazione del controllo e delle ammissioni manicomiali durante l'apice del Regime.</li>
+                </ul>
+            </div>
+        </div>
+        <p style="margin-top: 2rem; font-size: 1.1rem; font-style: italic; color: #6b7280;">
+            Le lacune documentali coincidono con i periodi di massima turbolenza e transizione politica.
+        </p>
+    </div>
+
+    <div class="slide">
+        <h2>Shift Diagnostico: La Concentrazione Paranoide</h2>
+        <p style="margin-bottom: 2rem;">
+            La composizione diagnostica ha subito variazioni sostanziali in base all'epoca storica:
+        </p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Periodo Storico</th>
+                    <th>Anni (n)</th>
+                    <th>Distribuzione Diagnostica</th>
+                    <th>Diagnosi Dominante</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Belle Époque</td>
+                    <td>1892–1914 (n=24)</td>
+                    <td>38% Schizophrenia, 28% Bipolar, 31% Neurocognitive</td>
+                    <td class="blue">Equilibrata</td>
+                </tr>
+                <tr>
+                    <td>Consolidamento Fascista</td>
+                    <td>1930–1935 (n=76)</td>
+                    <td><span class="red">79% Spettro Paranoide</span></td>
+                    <td class="red">Paranoid Syndrome / Psicosi</td>
+                </tr>
+                <tr>
+                    <td>Post-WWII</td>
+                    <td>1946–1971 (n=113)</td>
+                    <td>71%–92% Spettro Schizofrenico</td>
+                    <td class="green">Schizophrenia Spectrum</td>
+                </tr>
+            </tbody>
+        </table>
+        <p style="margin-top: 1.5rem; font-weight: 700; color: #1d4ed8;">
+            L'epoca fascista è caratterizzata da una netta <span class="red">"polarizzazione paranoide"</span>, coerente con il clima di sorveglianza e sospetto del regime.
+        </p>
+    </div>
+
+    <div class="slide">
+        <h2>Creatività, Autorialità e Occupazioni</h2>
+        <p style="margin-bottom: 1.5rem;">
+            Le metriche testuali e i profili professionali variano temporalmente:
+        </p>
+        <div class="flex-container" style="max-width: 1000px;">
+            <div class="content-box">
+                <h3 class="purple" style="margin-top: 0;">Creatività nel Fascismo</h3>
+                <ul class="compact-list" style="margin-top: 0.5rem;">
+                    <li><span class="green">Fascismo Iniziale (1922–1935):</span> Creatività elevata (z-score +0.17 / +0.19) vs. Belle Époque (z-score -0.04).</li>
+                    <li><span class="red">Tardo Fascismo (1936–1939):</span> Creatività in declino (z-score -0.04).</li>
+                    <li>L'Autorialità (controllo formale) era invece in declino nel primo fascismo, indicando espressioni più divergenti e meno strutturate.</li>
+                </ul>
+            </div>
+            <div class="content-box">
+                <h3 class="orange" style="margin-top: 0;">Profili Occupazionali Rilevanti</h3>
+                <ul class="compact-list" style="margin-top: 0.5rem;">
+                    <li>Aumento di rappresentazione di <span class="orange">Dipendenti Statali</span> e <span class="orange">Militari</span> nel periodo Fascista.</li>
+                    <li>Esempi: Sergente Maggiore, Brigadiere dei Carabinieri, Cancelliere di Corte.</li>
+                    <li>Ciò suggerisce che i conflitti con l'autorità o il ruolo nell'apparato repressivo fossero fattori di stress psichico o catalizzatori per l'internamento.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide">
+        <h2>Temi Semantici: Il Ruolo delle Narrazioni Culturali</h2>
+        <p style="margin-bottom: 1.5rem;">
+            L'analisi dei frame conferma che il contenuto riflette il contesto politico e culturale:
+        </p>
+        <div class="flex-container" style="max-width: 1000px;">
+            <div class="content-box">
+                <h3 class="red" style="margin-top: 0;">Periodo Fascista (1922–1940)</h3>
+                <ul class="compact-list" style="margin-top: 0.5rem;">
+                    <li><span class="red">Bassa Diversità:</span> Solo il 29% dell'inventario dei frame utilizzato.</li>
+                    <li><span class="red">Concentrazione su:</span> Persecuzione (0.83 situazioni/documento), Cospirazione, Maltrattamenti Istituzionali.</li>
+                    <li>I pazienti attingono a un repertorio limitato di paure socialmente salienti.</li>
+                </ul>
+            </div>
+            <div class="content-box">
+                <h3 class="green" style="margin-top: 0;">Periodo Post-Fascista</h3>
+                <ul class="compact-list" style="margin-top: 0.5rem;">
+                    <li><span class="green">Post-Guerra (1946–1959):</span> Shift verso i frame di Appello Familiare e Critica Istituzionale.</li>
+                    <li><span class="green">Anni '60–'70:</span> Recupero di Diversità (67% dei frame utilizzati).</li>
+                    <li><strong>Validazione:</strong> Il contenuto semantico è irriducibile alla sola diagnosi, riflettendo le narrative culturali e le libertà di espressione disponibili.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="slide">
+        <h2>Tendenze Temporali: Sintesi</h2>
+        <div style="text-align: left; max-width: 900px; font-size: 1.25rem;">
+            <p style="margin-bottom: 1.5rem; font-style: italic;">
+                Le variazioni nel corpus non sono casuali, ma sono profondamente intrecciate con la storia politica italiana.
+            </p>
+            <div class="list-item">
+                <span class="checkmark">✓</span>
+                <span>La polarizzazione paranoide diagnostica e semantica è la firma del periodo fascista nel manicomio.</span>
+            </div>
+            <div class="list-item">
+                <span class="checkmark">✓</span>
+                <span>L'elevata creatività coesiste con una bassa autorialità, suggerendo una espressione divergente e disorganizzata (o resistente) sotto pressione politica.</span>
+            </div>
+            <div class="list-item">
+                <span class="checkmark">✓</span>
+                <span>La correlazione tra occupazioni statali e temi di conflitto/persecuzione evidenzia il ruolo dell'autorità nel discorso delirante.</span>
+            </div>
+            <div class="list-item">
+                <span class="checkmark">✓</span>
+                <span>Il manicomio agisce come un sismografo sociale, registrando le tensioni e i frame narrativi del contesto esterno.</span>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+<div id="controls">
+    <button id="prev">◀ Previous</button>
+    <div id="info">Slide <span id="current">1</span> of <span id="total">10</span></div>
+    <button id="next">Next ▶</button>
+</div>
+
+<script>
+    let current = 0;
+    const slides = document.querySelectorAll('.slide');
+    const total = slides.length;
+    const prevBtn = document.getElementById('prev');
+    const nextBtn = document.getElementById('next');
+    const currentSpan = document.getElementById('current');
+    const totalSpan = document.getElementById('total'); 
+
+    totalSpan.textContent = total; 
+
+    function updateSlide() {
+        slides.forEach((slide, index) => {
+            if (index === current) {
+                slide.classList.add('active');
+            } else {
+                slide.classList.remove('active');
             }
-
-            // Event Listeners
-            prevButton.addEventListener('click', () => {
-                if (currentSlide > 0) {
-                    showSlide(currentSlide - 1);
-                }
-            });
-
-            nextButton.addEventListener('click', () => {
-                if (currentSlide < slideCount - 1) {
-                    showSlide(currentSlide + 1);
-                }
-            });
-            
-            // Keyboard navigation
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'ArrowRight' || e.key === ' ') { // Space or Right Arrow for Next
-                    if (currentSlide < slideCount - 1) {
-                        showSlide(currentSlide + 1);
-                    }
-                } else if (e.key === 'ArrowLeft') { // Left Arrow for Previous
-                    if (currentSlide > 0) {
-                        showSlide(currentSlide - 1);
-                    }
-                }
-            });
-
-            // Show the first slide initially
-            showSlide(0);
         });
-    </script>
+
+        currentSpan.textContent = current + 1;
+        prevBtn.disabled = (current === 0);
+        nextBtn.disabled = (current === total - 1);
+    }
+
+    prevBtn.onclick = function() {
+        if (current > 0) {
+            current--;
+            updateSlide();
+        }
+    };
+
+    nextBtn.onclick = function() {
+        if (current < total - 1) {
+            current++;
+            updateSlide();
+        }
+    };
+
+    document.onkeydown = function(e) {
+        if (e.key === 'ArrowLeft') {
+            if (current > 0) {
+                current--;
+                updateSlide();
+            }
+        } else if (e.key === 'ArrowRight' || e.key === ' ') {
+            if (current < total - 1) {
+                current++;
+                updateSlide();
+            }
+            e.preventDefault();
+        }
+    };
+
+    updateSlide();
+</script>
 
 </body>
 </html>
