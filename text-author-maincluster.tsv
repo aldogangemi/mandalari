@@ -1,0 +1,372 @@
+Doc_ID,Author,Dominant Cluster
+1,Pappalardo Michele,Cluster 1
+2,Pappalardo Michele,Cluster 1
+3,Pappalardo Michele,Cluster 1 / Cluster 3
+4,Pappalardo Michele,Cluster 1
+5,Pappalardo Michele,Cluster 1
+6,Pappalardo Michele,Cluster 3
+7,Pappalardo Michele,Cluster 2
+8,Pappalardo Michele,Cluster 2
+9,Pantè Antonino,Cluster 3
+10,Pantè Antonino,Cluster 2
+11,Pantè Antonino,Cluster 1
+12,Pantè Antonino,Cluster 1
+13,Pantè Antonino,Cluster 2
+14,Pantè Antonino,Cluster 1
+15,Pantè Antonino,Cluster 1
+16,Pantè Antonino,Cluster 3
+17,Pantè Antonino,Cluster 1
+18,Pantè Antonino,Cluster 3
+19,Pantè Antonino,Cluster 1
+20,Pantè Antonino,Cluster 1
+21,Pantè Antonino,Cluster 1
+22,Pantè Antonino,Cluster 3
+23,Lanza Giuseppe,Cluster 3
+24,Lanza Giuseppe,Cluster 3
+25,Lanza Giuseppe,Cluster 3
+26,Lanza Giuseppe,Cluster 3
+27,Lanza Giuseppe,Cluster 3
+28,Marletta Antonio,Cluster 2
+29,Sanfilippo Orazio,Cluster 3
+30,Sanfilippo Orazio,Cluster 2
+31,Sanfilippo Orazio,Cluster 2
+32,Sanfilippo Orazio,Cluster 2
+33,Ruggeri Sebastiano,Cluster 2
+34,Ruggeri Sebastiano,Cluster 1
+35,Ruggeri Sebastiano,Cluster 2
+36,Gambino Domenico,Cluster 3
+37,Gambino Domenico,Cluster 4
+38,Gambino Domenico,Cluster 3
+39,Gambino Domenico,Cluster 4
+40,Strati Filippo,Cluster 2
+41,Bellabarba Giovan Battista,Cluster 1
+42,Bellabarba Giovan Battista,Cluster 3
+43,Bellabarba Giovan Battista,Cluster 1
+44,Bellabarba Giovan Battista,Cluster 2
+45,Bellabarba Giovan Battista,Cluster 2
+46,Trovato Antonino,Cluster 3
+47,Trovato Antonino,Cluster 2
+48,Raynieri Giacomo,Cluster 3
+49,Raynieri Giacomo,Cluster 3
+50,Di Mauro Giuseppe,Cluster 3
+51,Iozzia Giuseppe,Cluster 3
+52,Magazzu Antonia,Cluster 3
+53,Magazzu Antonia,Cluster 3
+54,Magazzu Antonia,Cluster 2
+55,Magazzu Antonia,Cluster 2
+56,Magazzu Antonia,Cluster 2
+57,Baiardo Luigi,Cluster 3
+58,Baiardo Luigi,Cluster 1
+59,Baiardo Luigi,Cluster 1
+60,Baiardo Luigi,Cluster 1
+61,Baiardo Luigi,Cluster 1
+62,Baiardo Luigi,Cluster 1
+63,Baiardo Luigi,Cluster 1
+64,Baiardo Luigi,Cluster 1
+65,Baiardo Luigi,Cluster 2
+66,D'Amico Onofrio,Cluster 3
+67,D'Amico Onofrio,Cluster 3
+68,D'Amico Onofrio,Cluster 1
+69,D'Amico Onofrio,Cluster 1
+70,D'Amico Onofrio,Cluster 3
+71,D'Amico Onofrio,Cluster 3
+72,D'Amico Onofrio,Cluster 3
+73,D'Amico Onofrio,Cluster 3
+74,D'Amico Onofrio,Cluster 3
+75,D'Amico Onofrio,Cluster 3
+76,D'Amico Onofrio,Cluster 3
+77,D'Amico Onofrio,Cluster 1
+78,D'Amico Onofrio,Cluster 3
+79,D'Amico Onofrio,Cluster 3
+80,D'Amico Onofrio,Cluster 3
+81,D'Amico Onofrio,Cluster 3
+82,D'Amico Onofrio,Cluster 3
+83,D'Amico Onofrio,Cluster 1
+84,D'Amico Onofrio,Cluster 3
+85,D'Amico Onofrio,Cluster 3
+86,D'Amico Onofrio,Cluster 3
+87,D'Amico Onofrio,Cluster 1
+88,Trifiletti Salvatore,Cluster 1
+89,Trifiletti Salvatore,Cluster 3
+90,Di Blasi Antonino,Cluster 3
+91,Di Blasi Antonino,Cluster 1
+92,Di Blasi Antonino,Cluster 3
+93,Di Blasi Antonino,Cluster 3
+94,Di Blasi Antonino,Cluster 1
+95,Panato Antonio,Cluster 1
+96,Panato Antonio,Cluster 1
+97,Astri Norina,Cluster 3
+98,Astri Norina,Cluster 1
+99,De Francesco Francesco,Cluster 1
+100,De Francesco Francesco,Cluster 1
+101,De Francesco Francesco,Cluster 1
+102,Sgariglia Bonaventura,Cluster 1
+103,Sgariglia Bonaventura,Cluster 1
+104,Nioi Antonio,Cluster 1
+105,Nioi Antonio,Cluster 2
+106,Nioi Antonio,Cluster 1
+107,Nioi Antonio,Cluster 3
+108,Nioi Antonio,Cluster 3
+109,Nioi Antonio,Cluster 1
+110,Nioi Antonio,Cluster 1
+111,Nioi Antonio,Cluster 1
+112,Consolo Luigi,Cluster 1
+113,Orso Carmine Giuseppe,Cluster 2
+114,Orso Carmine Giuseppe,Cluster 2
+115,Graziano Leonardo,Cluster 2
+116,Mattioli Giovanni,Cluster 1
+117,Mattioli Giovanni,Cluster 1
+118,Marziano Vincenzo,Cluster 1
+119,Marziano Vincenzo,Cluster 1
+120,Tricarichi Vito Antonino,Cluster 3
+121,Tricarichi Vito Antonino,Cluster 1
+122,Di Natale Tito Aurelio,Cluster 1
+123,Di Natale Tito Aurelio,Cluster 1
+124,Di Natale Tito Aurelio,Cluster 3
+125,Trovato Gaetano,Cluster 1
+126,Sacca Antonino,Cluster 4
+127,Sacca Antonino,Cluster 1
+128,Sacca Antonino,Cluster 3
+129,Gulli Antonino,Cluster 3
+130,Gulli Antonino,Cluster 2
+131,Cavoli Antonino,Cluster 4
+132,Cavoli Antonino,Cluster 4
+133,Cavoli Antonino,Cluster 4
+134,Cavoli Antonino,Cluster 4
+135,Cavoli Antonino,Cluster 3
+136,Scuderi Rosario,Cluster 3
+137,Scuderi Rosario,Cluster 3
+138,Scuderi Rosario,Cluster 3
+139,La Ganga Vincenzo,Cluster 3
+140,La Ganga Vincenzo,Cluster 2
+141,Veca Orazio,Cluster 3
+142,Randazzo Vito,Cluster 4
+143,Randazzo Vito,Cluster 4
+144,Randazzo Vito,Cluster 4
+145,Randazzo Vito,Cluster 4
+146,Randazzo Vito,Cluster 4
+147,Randazzo Vito,Cluster 4
+148,Randazzo Vito,Cluster 4
+149,Gulli Giovan Battista,Cluster 1
+150,Galuppi Giovanni,Cluster 3
+151,Galuppi Giovanni,Cluster 2
+152,Imbert Francesco,Cluster 3
+153,Romeo Paolo,Cluster 1
+154,Romeo Paolo,Cluster 1
+155,CAVARRA M. ANGELA CONSOLAZIONE,Cluster 3
+156,CAVARRA M. ANGELA CONSOLAZIONE,Cluster 3
+157,CAVARRA M. ANGELA CONSOLAZIONE,Cluster 3
+158,CAVARRA M. ANGELA CONSOLAZIONE,Cluster 2
+159,Cacciola Egidio,Cluster 3
+160,Cacciola Egidio,Cluster 1
+161,Cacciola Egidio,Cluster 1
+162,Cacciola Egidio,Cluster 1
+163,Cacciola Egidio,Cluster 1
+164,Amendolia Maria,Cluster 1
+165,Borruto Maria Nicola,Cluster 3
+166,Borruto Maria Nicola,Cluster 3
+167,Ioppolo Giovanni,Cluster 1
+168,Celona Calogero,Cluster 2
+169,Gabriele Alfredo,Cluster 3
+170,Gabriele Alfredo,Cluster 3
+171,Gabriele Alfredo,Cluster 3
+172,Gabriele Alfredo,Cluster 3
+173,Gabriele Alfredo,Cluster 4
+174,B. Alberto,Cluster 4
+175,B. Giuseppe,Cluster 2
+176,B. Giuseppe,Cluster 3
+177,Barbera Francesco,Cluster 3
+178,Barbera Francesco,Cluster 3
+179,Marito di C. Filomena,Cluster 3
+180,C. Filomena,Cluster 3
+181,C. Francesco_1,Cluster 4
+182,C. Leonardo,Cluster 2
+183,C. Leonardo,Cluster 3
+184,C. Francesco_2,Cluster 4
+185,C. Francesco_2,Cluster 1
+186,D'ARRIGO ALESSANDRO,Cluster 2
+187,SINOPOLI LETTERIO,Cluster 3
+188,SINOPOLI LETTERIO,Cluster 1
+189,La Pusata Alessandra,Cluster 3
+190,La Pusata Alessandra,Cluster 3
+191,Politi Giovanni,Cluster 3
+192,Politi Giovanni,Cluster 3
+193,Incarnò Tindaro,Cluster 3
+194,Catania Giuseppe,Cluster 3
+195,Catania Giuseppe,Cluster 3
+196,Catania Giuseppe,Cluster 3
+197,Pappalardo Giuseppe,Cluster 1
+198,Pappalardo Giuseppe,Cluster 1
+199,Pappalardo Giuseppe,Cluster 1
+200,Pappalardo Giuseppe,Cluster 1
+201,Librizzi Antonino,Cluster 3
+202,Librizzi Antonino,Cluster 3
+203,Librizzi Antonino,Cluster 3
+204,Librizzi Antonino,Cluster 1
+205,Bella Domenico Maria,Cluster 1
+206,Bella Domenico Maria,Cluster 3
+207,Bella Domenico Maria,Cluster 3
+208,Bella Domenico Maria,Cluster 1
+209,Crinò Giuseppe,Cluster 2
+210,Crinò Giuseppe,Cluster 3
+211,Crinò Giuseppe,Cluster 3
+212,Imprescia Mario,Cluster 1
+213,Nanni Teresa,Cluster 3
+214,Ruggeri Giuseppe,Cluster 1
+215,Ruggeri Giuseppe,Cluster 2
+216,Ruggeri Giuseppe,Cluster 3
+217,Ruggeri Giuseppe,Cluster 1
+218,Ruggeri Giuseppe,Cluster 3
+219,Mastroeni Nicola,Cluster 4
+220,Mastroeni Nicola,Cluster 2
+221,Mastroeni Nicola,Cluster 3
+222,Cannavò Giovanni,Cluster 3
+223,Balsamà Antonio,Cluster 3
+224,Balsamà Antonio,Cluster 1
+225,Balsamà Antonio,Cluster 1
+226,Bazza Vincenzo,Cluster 4
+227,Bazza Vincenzo,Cluster 4
+228,Bazza Vincenzo,Cluster 4
+229,Bazza Vincenzo,Cluster 3
+230,Bazza Vincenzo,Cluster 4
+231,Bazza Vincenzo,Cluster 4
+232,Benedetti Antonino,Cluster 3
+233,Benedetti Antonino,Cluster 1
+234,Benedetti Antonino,Cluster 3
+235,Santo P.,Cluster 3
+236,Santo P.,Cluster 1
+237,Santo P.,Cluster 2
+238,G. Antonino,Cluster 3
+239,G. Antonino,Cluster 3
+240,G. Antonino,Cluster 3
+241,G. Antonino,Cluster 3
+242,V. Ivo,Cluster 3
+243,V. Ivo,Cluster 3
+244,O. Angelo,Cluster 3
+245,O. Angelo,Cluster 3
+246,P. Francesco,Cluster 2
+247,P. Francesco,Cluster 3
+248,P. Francesco,Cluster 4
+249,P. Francesco,Cluster 3
+250,S. FRANZ,Cluster 1
+251,P. Domenico,Cluster 2
+252,P. Domenico,Cluster 2
+253,P. Domenico,Cluster 2
+254,P. Domenico,Cluster 2
+255,P. Domenico,Cluster 2
+256,P. Domenico,Cluster 2
+257,P. Domenico,Cluster 3
+258,L. Felice,Cluster 1
+259,L. Felice,Cluster 3
+260,L. Felice,Cluster 3
+261,L. Felice,Cluster 3
+262,N. Ettore,Cluster 1
+263,N. Ettore,Cluster 3
+264,S. Francesco,Cluster 2
+265,S. Francesco,Cluster 2
+266,V. Maria Rosa,Cluster 1
+267,V. Maria Rosa,Cluster 1
+268,V. Maria Rosa,Cluster 1
+269,V. Maria Rosa,Cluster 3
+270,Vadalà Adriana,Cluster 1
+271,Vadalà Adriana,Cluster 3
+272,Vadalà Adriana,Cluster 1
+273,Vadalà Adriana,Cluster 1
+274,Vadalà Adriana,Cluster 1
+275,Vadalà Adriana,Cluster 3
+276,Fanara Luigi,Cluster 3
+277,Fanara Luigi,Cluster 4
+278,Fanara Luigi,Cluster 4
+279,La Torre Rocco,Cluster 3
+280,La Torre Rocco,Cluster 3
+281,La Torre Rocco,Cluster 3
+282,Lo Castro Giuseppe,Cluster 3
+283,Lo Castro Giuseppe,Cluster 1
+284,Lo Castro Giuseppe,Cluster 3
+285,Lo Giudice Antonio Giovanni,Cluster 3
+286,Lo Giudice Antonio Giovanni,Cluster 3
+287,Maccarrone Angelo Sanglair,Cluster 3
+288,Maccarrone Angelo Sanglair,Cluster 3
+289,Pompignano Giuseppe,Cluster 3
+290,Pompignano Giuseppe,Cluster 3
+291,Pompignano Giuseppe,Cluster 3
+292,Pompignano Giuseppe,Cluster 3
+293,Pompignano Giuseppe,Cluster 3
+294,Satariano Giovanni,Cluster 3
+295,Satariano Giovanni,Cluster 3
+296,Satariano Giovanni,Cluster 3
+297,Satariano Giovanni,Cluster 3
+298,Satariano Giovanni,Cluster 1
+299,Portale Salvatore,Cluster 3
+300,Di Giovanni Ottavio,Cluster 1
+301,Di Giovanni Ottavio,Cluster 2
+302,Di Giovanni Ottavio,Cluster 3
+303,Di Giovanni Ottavio,Cluster 3
+304,Di Giovanni Ottavio,Cluster 4
+305,Di Giovanni Ottavio,Cluster 3
+306,Di Giovanni Ottavio,Cluster 3
+307,Di Giovanni Ottavio,Cluster 3
+308,Di Giovanni Ottavio,Cluster 3
+309,Di Giovanni Ottavio,Cluster 2
+310,Di Giovanni Ottavio,Cluster 1
+311,Rando Lorenzo,Cluster 3
+312,Rando Lorenzo,Cluster 3
+313,Rando Lorenzo,Cluster 3
+314,Rando Lorenzo,Cluster 3
+315,Rando Lorenzo,Cluster 3
+316,Rizzo Leo,Cluster 1
+317,Rizzo Leo,Cluster 3
+318,Rizzo Leo,Cluster 3
+319,Rizzo Leo,Cluster 3
+320,Tinuzzo Placido,Cluster 2
+321,Tinuzzo Placido,Cluster 2
+322,Tinuzzo Placido,Cluster 3
+323,D. GUGLIELMO,Cluster 3
+324,D. GUGLIELMO,Cluster 3
+325,D. GUGLIELMO,Cluster 3
+326,D. GUGLIELMO,Cluster 3
+327,D. Leonardo,Cluster 4
+328,D. Leonardo,Cluster 4
+329,Pappalardo Michele,Cluster 3
+330,Pappalardo Michele,Cluster 2
+331,Pappalardo Michele,Cluster 3
+332,Tricarichi Vito Antonino,Cluster 3
+333,Tricarichi Vito Antonino,Cluster 3
+334,Tricarichi Vito Antonino,Cluster 3
+335,Tricarichi Vito Antonino,Cluster 3
+336,Tricarichi Vito Antonino,Cluster 3
+337,Tricarichi Vito Antonino,Cluster 3
+338,Tricarichi Vito Antonino,Cluster 2
+339,D'Amico Onofrio,Cluster 3
+340,D'Amico Onofrio,Cluster 3
+341,D'Amico Onofrio,Cluster 3
+342,D'Amico Onofrio,Cluster 3
+343,D'Amico Onofrio,Cluster 3
+344,D'Amico Onofrio,Cluster 3
+345,D'Amico Onofrio,Cluster 3
+346,D'Amico Onofrio,Cluster 3
+347,D'Amico Onofrio,Cluster 1
+348,D'Amico Onofrio,Cluster 2
+349,D'Amico Onofrio,Cluster 1
+350,D'Amico Onofrio,Cluster 3
+351,D'Amico Onofrio,Cluster 1
+352,D'Amico Onofrio,Cluster 3
+353,D'Amico Onofrio,Cluster 1
+354,D'Amico Onofrio,Cluster 3
+355,D'Amico Onofrio,Cluster 1
+356,D'Amico Onofrio,Cluster 1
+357,Randazzo Vito,Cluster 4
+358,Gabriele Alfredo,Cluster 3
+359,Gabriele Alfredo,Cluster 1
+360,Gabriele Alfredo,Cluster 1
+361,Gabriele Alfredo,Cluster 1
+362,Gabriele Alfredo,Cluster 3
+363,Gabriele Alfredo,Cluster 3
+364,Pantè Antonino,Cluster 1
+365,Pantè Antonino,Cluster 1
+366,Gabriele Alfredo,Cluster 3
+367,Gabriele Alfredo,Cluster 3
+368,Gabriele Alfredo,Cluster 3
+369,C. Francesco_3,Cluster 1
+370,Pantè Antonino,Cluster 1
+371,Nioi Antonio,Cluster 1
